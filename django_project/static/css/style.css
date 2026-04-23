@@ -4,3 +4,11 @@
       object-fit: contain; /* or 'cover' if you want them to fill the space */
       background-color: #f8f9fa;
 }
+/* Standardizing the product card images */
+.product-card-img {
+    width: 100%;
+    height: 200px;       /* You can adjust this height as needed */
+    object-fit: cover;   /* This crops the image to fit the box perfectly */
+    object-position: center;
+    background-color: #f8f9fa; /* Light grey background for transparent images */
+}
