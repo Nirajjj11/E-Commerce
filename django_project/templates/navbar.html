@@ -1,0 +1,46 @@
+{% load static %}
+<nav class="navbar navbar-expand-lg sticky-top shadow-sm px-3" id="mainNav">
+      <div class="container-fluid">
+            <!-- LEFT SIDE: Home & Dashboard -->
+            <div class="d-flex align-items-center">
+                  <a class="navbar-brand fw-bold text-primary" href="{% url 'home' %}">MarketPlace</a>
+                  <div class="navbar-nav d-none d-md-flex ms-3">
+                        <a class="nav-link" href="{% url 'home' %}">Home</a>
+                        <a class="nav-link" href="#">Dashboard</a>
+                  </div>
+            </div>
+
+            <!-- RIGHT SIDE: Auth & Day/Night Mode -->
+            <div class="d-flex align-items-center">
+
+                  <!-- Dark Mode Toggle -->
+                  <button class="btn btn-link nav-link me-3" id="themeToggle" type="button">
+                        <i class="bi bi-moon-stars-fill" id="themeIcon"></i>
+                  </button>
+
+                  {% if user.is_authenticated %}
+                  <span class="navbar-text me-3 d-none d-sm-inline">
+                        Hello, <strong>{{ user.username }}</strong>
+                  </span>
+                  <a href="#" class="btn btn-outline-danger btn-sm">Logout</a>
+                  {% else %}
+                  <a href="#" class="btn btn-link nav-link me-2">Login</a>
+                  <a href="#" class="btn btn-primary btn-sm px-3">Sign Up</a>
+                  {% endif %}
+
+                  <!-- Mobile Menu Toggle -->
+                  <button class="navbar-toggler ms-2" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarNav">
+                        <span class="navbar-toggler-icon"></span>
+                  </button>
+            </div>
+
+            <!-- Mobile View Items (Hidden on Desktop) -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                  <ul class="navbar-nav d-md-none pt-2">
+                        <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#">Dashboard</a></li>
+                  </ul>
+            </div>
+      </div>
+</nav>

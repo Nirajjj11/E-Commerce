@@ -1,0 +1,6 @@
+.card-img-top {
+      width: 100%;
+      height: 200px;
+      object-fit: contain; /* or 'cover' if you want them to fill the space */
+      background-color: #f8f9fa;
+}
