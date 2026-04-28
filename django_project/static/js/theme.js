@@ -1,23 +1,30 @@
-const themeToggle = document.getElementById('themeToggle');
-const themeIcon = document.getElementById('themeIcon');
-const htmlElement = document.documentElement;
+const themeToggle = () => {
+      const htmlElement = document.documentElement;
+      const currentTheme = htmlElement.getAttribute('data-bs-theme');
+      const newTheme = currentTheme === 'light' ? 'dark' : 'light';
 
-// Initialize theme from localStorage immediately to prevent "flash"
-if (localStorage.getItem('theme') === 'dark') {
-      htmlElement.setAttribute('data-bs-theme', 'dark');
-      if (themeIcon) themeIcon.classList.replace('bi-moon-stars-fill', 'bi-sun-fill');
-}
+      htmlElement.setAttribute('data-bs-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+      updateIcon(newTheme);
+};
 
-if (themeToggle) {
-      themeToggle.addEventListener('click', () => {
-            if (htmlElement.getAttribute('data-bs-theme') === 'dark') {
-                  htmlElement.setAttribute('data-bs-theme', 'light');
-                  themeIcon.classList.replace('bi-sun-fill', 'bi-moon-stars-fill');
-                  localStorage.setItem('theme', 'light');
+const updateIcon = (theme) => {
+      const icon = document.getElementById('themeIcon');
+      if (icon) {
+            if (theme === 'dark') {
+                  icon.classList.replace('bi-moon-stars-fill', 'bi-sun-fill');
             } else {
-                  htmlElement.setAttribute('data-bs-theme', 'dark');
-                  themeIcon.classList.replace('bi-moon-stars-fill', 'bi-sun-fill');
-                  localStorage.setItem('theme', 'dark');
+                  icon.classList.replace('bi-sun-fill', 'bi-moon-stars-fill');
             }
-      });
-}
+      }
+};
+
+// Apply theme immediately to prevent white flash
+const savedTheme = localStorage.getItem('theme') || 'light';
+document.documentElement.setAttribute('data-bs-theme', savedTheme);
+
+window.addEventListener('DOMContentLoaded', () => {
+      updateIcon(savedTheme);
+      const btn = document.getElementById('themeToggle');
+      if (btn) btn.addEventListener('click', themeToggle);
+});

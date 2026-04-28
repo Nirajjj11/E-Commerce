@@ -15,3 +15,12 @@ class CustomUserChangeForm(UserChangeForm):
       class Meta: 
             model = CustomUser 
             fields = ('username', 'email', 'age', 'gender', 'mobile_no', 'city_village', 'state', 'country', 'pincode')
+            
+class SellerSignUpForm(UserCreationForm):
+      class Meta(UserCreationForm.Meta):
+            model = CustomUser
+            fields = UserCreationForm.Meta.fields + (
+                  'email', 'age', 'gender', 'mobile_no', 
+                  'city_village', 'state', 'country', 'pincode',
+                  'product_category', 'sub_category'
+            )

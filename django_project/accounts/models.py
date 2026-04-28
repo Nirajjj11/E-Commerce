@@ -18,6 +18,11 @@ class CustomUser(AbstractUser):
       state = models.CharField(max_length=100, null=True, blank=True)
       country = models.CharField(max_length=100, default="India")
       pincode = models.CharField(max_length=10, null=True, blank=True)
-
+      
+      is_approved_seller = models.BooleanField(default=False)
+      product_category = models.CharField(max_length=100, null=True, blank=True)
+      sub_category = models.CharField(max_length=100, null=True, blank=True)
+      
+      
       def __str__(self):
             return self.username

@@ -1,28 +1,31 @@
 {% extends "base.html" %}
 
+{% block title %} Seller Registration {% endblock title %}
+
 {% block content %}
 <div class="container my-5">
       <div class="row justify-content-center">
-            <div class="col-lg-7 col-md-10">
+            <div class="col-lg-8 col-md-10">
 
                   <!-- Header Section -->
                   <div class="text-center mb-4">
-                        <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center shadow-sm mb-3"
-                              style="width: 60px; height: 60px;">
-                              <i class="bi bi-person-plus fs-3"></i>
+                        <div class="bg-success text-white rounded-circle d-inline-flex align-items-center justify-content-center shadow-sm mb-3"
+                              style="width: 70px; height: 70px;">
+                              <i class="bi bi-shop fs-2"></i>
                         </div>
-                        <h2 class="fw-bold text-dark">Create Your Account</h2>
-                        <p class="text-muted">Fill in your details to start buying and selling.</p>
+                        <h2 class="fw-bold text-dark">Become a Verified Seller</h2>
+                        <p class="text-muted">Register your business details. Our team will review and approve your
+                              account for selling.</p>
                   </div>
 
                   <div class="card shadow-lg border-0 rounded-4">
                         <div class="card-body p-4 p-md-5">
-                              <form method="post" class="needs-validation">
+                              <form method="post" class="needs-validation" novalidate>
                                     {% csrf_token %}
 
-                                    <!-- Global Errors -->
+                                    <!-- Error Handling -->
                                     {% if form.errors %}
-                                    <div class="alert alert-danger shadow-sm">
+                                    <div class="alert alert-danger border-0 small shadow-sm mb-4">
                                           <ul class="mb-0">
                                                 {% for field in form %}
                                                 {% for error in field.errors %}
@@ -36,9 +39,33 @@
                                     </div>
                                     {% endif %}
 
-                                    <!-- Section: Account Basics -->
-                                    <h5 class="text-primary mb-3 fw-bold"><i class="bi bi-shield-lock me-2"></i>Account
-                                          Security</h5>
+                                    <!-- Section: Business Details (The New Fields) -->
+                                    <h5 class="text-success mb-3 fw-bold border-bottom pb-2">
+                                          <i class="bi bi-briefcase me-2"></i>Business Information
+                                    </h5>
+                                    <div class="row g-3 mb-4">
+                                          <div class="col-md-6">
+                                                <div class="form-floating">
+                                                      <input type="text" name="product_category"
+                                                            class="form-control bg-light border-0"
+                                                            id="id_product_category" placeholder="Category" required>
+                                                      <label for="id_product_category">Main Product Category</label>
+                                                </div>
+                                          </div>
+                                          <div class="col-md-6">
+                                                <div class="form-floating">
+                                                      <input type="text" name="sub_category"
+                                                            class="form-control bg-light border-0" id="id_sub_category"
+                                                            placeholder="Sub Category" required>
+                                                      <label for="id_sub_category">Sub-Category / Niche</label>
+                                                </div>
+                                          </div>
+                                    </div>
+
+                                    <!-- Section: Account Security -->
+                                    <h5 class="text-success mb-3 fw-bold border-bottom pb-2">
+                                          <i class="bi bi-shield-lock me-2"></i>Account Security
+                                    </h5>
                                     <div class="row g-3 mb-4">
                                           <div class="col-md-6">
                                                 <div class="form-floating">
@@ -53,7 +80,7 @@
                                                       <input type="email" name="email"
                                                             class="form-control bg-light border-0" id="id_email"
                                                             placeholder="Email" required>
-                                                      <label for="id_email">Email Address</label>
+                                                      <label for="id_email">Business Email Address</label>
                                                 </div>
                                           </div>
                                           <div class="col-md-6">
@@ -74,9 +101,10 @@
                                           </div>
                                     </div>
 
-                                    <!-- Section: Personal Info -->
-                                    <h5 class="text-primary mb-3 fw-bold"><i
-                                                class="bi bi-person-badge me-2"></i>Personal Details</h5>
+                                    <!-- Section: Personal & Contact -->
+                                    <h5 class="text-success mb-3 fw-bold border-bottom pb-2">
+                                          <i class="bi bi-person-badge me-2"></i>Contact Details
+                                    </h5>
                                     <div class="row g-3 mb-4">
                                           <div class="col-md-4">
                                                 <div class="form-floating">
@@ -108,9 +136,10 @@
                                           </div>
                                     </div>
 
-                                    <!-- Section: Address -->
-                                    <h5 class="text-primary mb-3 fw-bold"><i class="bi bi-geo-alt me-2"></i>Shipping
-                                          Address</h5>
+                                    <!-- Section: Store/Shipping Address -->
+                                    <h5 class="text-success mb-3 fw-bold border-bottom pb-2">
+                                          <i class="bi bi-geo-alt me-2"></i>Pickup/Store Address
+                                    </h5>
                                     <div class="row g-3 mb-4">
                                           <div class="col-md-6">
                                                 <div class="form-floating">
@@ -132,7 +161,7 @@
                                                 <div class="form-floating">
                                                       <input type="text" name="country"
                                                             class="form-control bg-light border-0" id="id_country"
-                                                            value="India" placeholder="Country">
+                                                            value="India">
                                                       <label for="id_country">Country</label>
                                                 </div>
                                           </div>
@@ -148,16 +177,17 @@
 
                                     <!-- Terms & Submit -->
                                     <div class="form-check mb-4">
-                                          <input class="form-check-input" type="checkbox" id="termsCheck" required>
-                                          <label class="form-check-label small text-muted" for="termsCheck">
-                                                I agree to the terms and conditions and privacy policy.
+                                          <input class="form-check-input" type="checkbox" id="sellerTerms" required>
+                                          <label class="form-check-label small text-muted" for="sellerTerms">
+                                                I agree to the Seller Terms of Service and understand my account
+                                                requires manual approval.
                                           </label>
                                     </div>
 
                                     <div class="d-grid">
                                           <button type="submit"
-                                                class="btn btn-primary btn-lg py-3 rounded-3 shadow-sm fw-bold">
-                                                Register Account
+                                                class="btn btn-success btn-lg py-3 rounded-3 shadow-sm fw-bold">
+                                                Submit Seller Application
                                           </button>
                                     </div>
                               </form>
@@ -165,16 +195,11 @@
                   </div>
 
                   <!-- Footer Link -->
-                  <div class="text-center mt-4">
-                        <p class="text-secondary">Already a member?
-                              <a href="{% url 'login' %}" class="text-primary fw-bold text-decoration-none">Sign In
+                  <div class="text-center mt-4 mb-5">
+                        <p class="text-secondary">Looking for a standard buyer account?
+                              <a href="{% url 'signup' %}" class="text-primary fw-bold text-decoration-none">Register
                                     here</a>
                         </p>
-                  </div>
-                  <div class="alert alert-info border-0 shadow-sm text-center">
-                        <p class="mb-1">Want to sell your own products?</p>
-                        <a href="{% url 'seller_signup' %}" class="fw-bold text-decoration-none">Register as a Seller
-                              here <i class="bi bi-arrow-right"></i></a>
                   </div>
 
             </div>
