@@ -32,6 +32,10 @@ ALLOWED_HOSTS = []
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+# for login 
+LOGIN_REDIRECT_URL = "home"
+LOGOUT_REDIRECT_URL = "home" 
+
 
 # Application definition
 
@@ -44,6 +48,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     
     "product",          # for product app
+    "accounts",         # for accounts app
 
 ]
 

@@ -34,7 +34,7 @@
 
                                     <a class="nav-link dropdown-toggle" href="#" role="button"
                                           data-bs-toggle="dropdown">
-                                          {{ user.username }}
+                                          Hi {{ user.username }}
                                     </a>
 
                                     <ul class="dropdown-menu dropdown-menu-end">
@@ -50,7 +50,7 @@
                                           </li>
 
                                           <li>
-                                                <form method="post" action="">
+                                                <form method="post" action="{% url 'logout' %}">
                                                       {% csrf_token %}
                                                       <button type="submit" class="dropdown-item">
                                                             Logout
@@ -66,7 +66,7 @@
                         </ul>
 
                         <div class="d-flex">
-                              <a href="" class="btn btn-outline-secondary me-2">Log in</a>
+                              <a href="{% url 'login' %}" class="btn btn-outline-secondary me-2">Log in</a>
                               <a href="" class="btn btn-primary">Sign up</a>
                         </div>
 

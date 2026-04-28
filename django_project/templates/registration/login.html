@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container d-flex align-items-center justify-content-center" style="min-height: 80vh;">
+      <div class="row w-100 justify-content-center">
+            <div class="col-md-6 col-lg-4">
+
+                  <!-- Logo or Icon Branding -->
+                  <div class="text-center mb-4">
+                        <div class="bg-dark text-white rounded-circle d-inline-flex align-items-center justify-content-center shadow"
+                              style="width: 70px; height: 70px;">
+                              <i class="bi bi-shield-lock-fill fs-2"></i>
+                        </div>
+                        <h2 class="fw-bold mt-3 text-dark">Welcome Back</h2>
+                        <p class="text-muted">Please enter your details to sign in</p>
+                  </div>
+
+                  <div class="card shadow-lg border-0 rounded-4">
+                        <div class="card-body p-4 p-md-5">
+                              <form method="post" class="needs-validation">
+                                    {% csrf_token %}
+
+                                    <!-- Error Message Alert -->
+                                    {% if form.non_field_errors %}
+                                    <div class="alert alert-danger py-2 text-center small mb-4">
+                                          {% for error in form.non_field_errors %}
+                                          {{ error }}
+                                          {% endfor %}
+                                    </div>
+                                    {% endif %}
+
+                                    <!-- Username Field -->
+                                    <div class="form-floating mb-3">
+                                          <input type="text" name="username" class="form-control border-0 bg-light"
+                                                id="id_username" placeholder="Username" required>
+                                          <label for="id_username"><i class="bi bi-person me-2"></i>Username</label>
+                                    </div>
+
+                                    <!-- Password Field -->
+                                    <div class="form-floating mb-4">
+                                          <input type="password" name="password" class="form-control border-0 bg-light"
+                                                id="id_password" placeholder="Password" required>
+                                          <label for="id_password"><i class="bi bi-key me-2"></i>Password</label>
+                                    </div>
+
+                                    <!-- Options Row -->
+                                    <div class="d-flex justify-content-between align-items-center mb-4">
+                                          <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="rememberMe">
+                                                <label class="form-check-label small text-secondary" for="rememberMe">
+                                                      Remember me
+                                                </label>
+                                          </div>
+                                          <a href="#" class="small text-decoration-none fw-semibold text-primary">Forgot
+                                                password?</a>
+                                    </div>
+
+                                    <!-- Submit Button -->
+                                    <div class="d-grid">
+                                          <button type="submit"
+                                                class="btn btn-dark btn-lg py-3 rounded-3 shadow-sm fw-bold">
+                                                Sign In
+                                          </button>
+                                    </div>
+                              </form>
+                        </div>
+                  </div>
+
+                  <!-- Signup Redirect -->
+                  <div class="text-center mt-4">
+                        <p class="text-secondary">Don't have an account?
+                              <a href="{% url 'signup' %}" class="text-primary fw-bold text-decoration-none">Create Account</a>
+                        </p>
+                  </div>
+
+            </div>
+      </div>
+</div>
+{% endblock content %}
