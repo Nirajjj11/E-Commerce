@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container py-5">
+      <div class="card shadow border-0 mx-auto" style="max-width: 800px;">
+
+            <!-- Header: Background color adapts to User Role -->
+            <div class="card-header p-4 text-white 
+            {% if user.is_superuser %} bg-dark 
+            {% elif user.category %} bg-success 
+            {% else %} bg-primary {% endif %}">
+                  <div class="d-flex align-items-center">
+                        <div class="display-6 bg-white text-dark rounded-circle d-flex justify-content-center align-items-center"
+                              style="width: 70px; height: 70px;">
+                              {{ user.username|first|upper }}
+                        </div>
+                        <div class="ms-3">
+                              <h3 class="mb-0">{{ user.username }}</h3>
+                              <small class="text-uppercase fw-bold">
+                                    {% if user.is_superuser %} System Superadmin
+                                    {% elif user.category %} Authorized Seller
+                                    {% else %} Customer Account {% endif %}
+                              </small>
+                        </div>
+                  </div>
+            </div>
+
+            <div class="card-body p-4">
+                  <!-- Section 1: General Info (All Users) -->
+                  <h5 class="text-muted mb-3">Account Details</h5>
+                  <div class="row g-3 mb-4">
+                        <div class="col-md-6"><strong>Email:</strong> {{ user.email }}</div>
+                        <div class="col-md-6"><strong>Location:</strong> {{ user.city_village }}, {{ user.state }}</div>
+                        <div class="col-md-6"><strong>Mobile:</strong> {{ user.mobile_no }}</div>
+                        <div class="col-md-6"><strong>Joined:</strong> {{ user.date_joined|date:"M d, Y" }}</div>
+                  </div>
+
+                  <hr>
+
+                  <!-- Section 2: Seller Specific Info -->
+                  {% if user.category %}
+                  <div class="bg-light p-3 rounded mb-4">
+                        <h5 class="text-success"><i class="bi bi-shop me-2"></i>Business Profile</h5>
+                        <div class="row g-3">
+                              <div class="col-md-6"><strong>Business Category:</strong> {{ user.get_category_display }}
+                              </div>
+                              <div class="col-md-6"><strong>Niche/Sub-category:</strong> {{ user.sub_category }}</div>
+                              <div class="col-md-6">
+                                    <strong>Status:</strong>
+                                    {% if user.is_approved_seller %}
+                                    <span class="badge bg-success">Verified</span>
+                                    {% else %}
+                                    <span class="badge bg-warning text-dark">Pending Admin Approval</span>
+                                    {% endif %}
+                              </div>
+                        </div>
+                  </div>
+                  {% endif %}
+
+                  <!-- Section 3: Superadmin Specific Info -->
+                  {% if user.is_superuser %}
+                  <div class="alert alert-info border-0">
+                        <h5><i class="bi bi-shield-check me-2"></i>Administrative Access</h5>
+                        <p>You are logged in with full system privileges.</p>
+                        <a href="{% url 'admin:index' %}" class="btn btn-sm btn-dark">Open Management Console</a>
+                  </div>
+                  {% endif %}
+
+                  <!-- Common Actions -->
+                  <div class="mt-4">
+                        <a href="{% url 'password_change' %}" class="btn btn-link">Change Password</a>
+                  </div>
+
+                  <div class="mt-4 d-flex justify-content-between">
+                        <div>
+                              <a href="{% url 'profile_edit' %}" class="btn btn-primary">Edit Profile Information</a>
+                        </div>
+                        <div>
+                              <a href="{% url 'profile_delete' %}" class="btn btn-outline-danger btn-sm">Close Account</a>
+                        </div>
+                  </div>
+            </div>
+      </div>
+</div>
+{% endblock %}

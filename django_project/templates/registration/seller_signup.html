@@ -39,29 +39,27 @@
                                     </div>
                                     {% endif %}
 
-                                    <!-- Section: Business Details (The New Fields) -->
+                                    <!-- Section: Business Information -->
                                     <h5 class="text-success mb-3 fw-bold border-bottom pb-2">
                                           <i class="bi bi-briefcase me-2"></i>Business Information
                                     </h5>
                                     <div class="row g-3 mb-4">
                                           <div class="col-md-6">
                                                 <div class="form-floating">
-                                                      <input type="text" name="product_category"
-                                                            class="form-control bg-light border-0"
-                                                            id="id_product_category" placeholder="Category" required>
-                                                      <label for="id_product_category">Main Product Category</label>
+                                                      {# Django will now render the <select> with CATEGORY_CHOICES #}
+                                                            {{ form.category }}
+                                                            <label for="id_product_category">Main Product
+                                                                  Category</label>
                                                 </div>
                                           </div>
                                           <div class="col-md-6">
                                                 <div class="form-floating">
-                                                      <input type="text" name="sub_category"
-                                                            class="form-control bg-light border-0" id="id_sub_category"
-                                                            placeholder="Sub Category" required>
-                                                      <label for="id_sub_category">Sub-Category / Niche</label>
+                                                      {# Django will now render the <select> with SUB_CATEGORY_CHOICES #}
+                                                            {{ form.sub_category }}
+                                                            <label for="id_sub_category">Sub-Category / Niche</label>
                                                 </div>
                                           </div>
                                     </div>
-
                                     <!-- Section: Account Security -->
                                     <h5 class="text-success mb-3 fw-bold border-bottom pb-2">
                                           <i class="bi bi-shield-lock me-2"></i>Account Security

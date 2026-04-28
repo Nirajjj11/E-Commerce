@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container py-5">
+      <div class="card shadow border-0 mx-auto" style="max-width: 500px;">
+
+            <!-- Danger Header -->
+            <div class="card-header p-4 bg-danger text-white">
+                  <div class="d-flex align-items-center">
+                        <i class="bi bi-exclamation-triangle-fill fs-3 me-3"></i>
+                        <h4 class="mb-0">Delete Account</h4>
+                  </div>
+            </div>
+
+            <div class="card-body p-4 text-center">
+                  <p class="lead text-muted">We're sorry to see you go, <strong>{{ user.username }}</strong>.</p>
+                  <p class="text-danger small fw-bold">Warning: This action is permanent. All your data, orders, and
+                        business listings will be permanently removed.</p>
+
+                  <form method="post" class="mt-4">
+                        {% csrf_token %}
+
+                        <div class="d-grid gap-2">
+                              <button type="submit" class="btn btn-danger py-2">
+                                    Yes, Permanently Delete My Account
+                              </button>
+                              <a href="{% url 'profile' %}" class="btn btn-outline-secondary py-2">
+                                    No, Keep My Account
+                              </a>
+                        </div>
+                  </form>
+            </div>
+      </div>
+</div>
+{% endblock %}
