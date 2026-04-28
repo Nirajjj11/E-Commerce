@@ -42,4 +42,13 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
 
       def get_success_url(self):
             return reverse('product_detail', kwargs={'pk': self.object.pk})
+
+class ProductDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+      model = Product
+      template_name = "product_delete.html"
+      success_url = reverse_lazy('home')
+      
+      def test_func(self):
+            product = self.get_object()
+            return self.request.user == product.seller
       
