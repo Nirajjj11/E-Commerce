@@ -4,7 +4,7 @@ from django.shortcuts import redirect
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 from .models import Product, Order, OrderItems, OrderItemTracking
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 
 # Create your views here.
 class ProductListView(ListView):
@@ -29,4 +29,17 @@ class ProductCreateView(LoginRequiredMixin,CreateView):
       def form_valid(self, form):
             form.instance.seller = self.request.user
             return super().form_valid(form)
+      
+class ProductUpdateView(LoginRequiredMixin, UpdateView):
+      model = Product
+      template_name = "product_update.html"
+      fields = ['name', 'description', 'category', 'sub_category', 'stocks', 'image', 'marked_price', 'discounts']
+
+      # Security check: Only the owner can edit
+      def test_func(self):
+            product = self.get_object()
+            return self.request.user == product.seller
+
+      def get_success_url(self):
+            return reverse('product_detail', kwargs={'pk': self.object.pk})
       
