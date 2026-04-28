@@ -12,6 +12,11 @@
                         <div class="card-body p-4 p-md-5">
                               <form method="post" enctype="multipart/form-data" class="needs-validation">
                                     {% csrf_token %}
+                                    {% if form.errors %}
+                                    <div class="alert alert-danger">
+                                          {{ form.errors }}
+                                    </div>
+                                    {% endif %}
 
                                     <!-- Product Name -->
                                     <div class="form-floating mb-4">
@@ -61,7 +66,7 @@
                                                             <input type="number" name="marked_price" step="0.01"
                                                                   class="form-control" id="id_marked_price"
                                                                   placeholder="0.00" required>
-                                                            <label for="id_marked_price">Market Price</label>
+                                                            <label for="id_marked_price">Marked Price</label>
                                                       </div>
                                                 </div>
                                           </div>

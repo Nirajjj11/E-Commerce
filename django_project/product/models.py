@@ -36,22 +36,22 @@ class Product(models.Model):
       seller = models.ForeignKey(User, on_delete=models.CASCADE, related_name='products')
       
       name = models.CharField(max_length=200)
-      description = models.TextField(max_length=500)
+      description = models.TextField(max_length=1000)
       category = models.CharField(max_length=20, choices=CATEGORY_CHOICES)
       sub_category = models.CharField(max_length=20, choices=SUB_CATEGORY_CHOICES)
       stocks = models.PositiveIntegerField(default=100)
       created_at = models.DateTimeField(auto_now_add=True)
       image = models.ImageField(upload_to='product_images', blank=True, null=True)
       
-      market_price = models.DecimalField(max_digits=10, decimal_places=2)
+      marked_price = models.DecimalField(max_digits=10, decimal_places=2)
       discounts = models.PositiveIntegerField(default=0, help_text="Enter percentage (e.g., 10 for 10%)")
       
       actual_price = models.DecimalField(max_digits=10, decimal_places=2, editable=False)
       
       def save(self, *args, **kwargs):
             # Calculate actual_price: Marked Price - (Marked Price * Discount / 100)
-            discount_amount = (self.market_price * self.discounts) / 100
-            self.actual_price = self.market_price - discount_amount
+            discount_amount = (self.marked_price * self.discounts) / 100
+            self.actual_price = self.marked_price - discount_amount
             super().save(*args, **kwargs)
             
       def __str__(self):

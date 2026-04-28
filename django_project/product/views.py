@@ -20,10 +20,10 @@ class ProductDetailView(DetailView):
       template_name = 'product_details.html'
       context_object_name = "product"
       
-class ProductCreateView(CreateView):
+class ProductCreateView(LoginRequiredMixin,CreateView):
       model = Product
       template_name = "product_form.html"
-      fields = ['name','description','category','sub_category','stocks','image','market_price','discounts']
+      fields = ['name','description','category','sub_category','stocks','image','marked_price','discounts']
       success_url = reverse_lazy('home')
       
       def form_valid(self, form):
