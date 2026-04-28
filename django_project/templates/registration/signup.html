@@ -1,18 +1,18 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container d-flex align-items-center justify-content-center my-5" style="min-height: 90vh;">
-      <div class="row w-100 justify-content-center">
-            <div class="col-md-8 col-lg-5">
+<div class="container my-5">
+      <div class="row justify-content-center">
+            <div class="col-lg-7 col-md-10">
 
-                  <!-- Branding -->
+                  <!-- Header Section -->
                   <div class="text-center mb-4">
-                        <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center shadow-sm"
-                              style="width: 70px; height: 70px;">
-                              <i class="bi bi-person-plus-fill fs-2"></i>
+                        <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center shadow-sm mb-3"
+                              style="width: 60px; height: 60px;">
+                              <i class="bi bi-person-plus fs-3"></i>
                         </div>
-                        <h2 class="fw-bold mt-3 text-dark">Create Account</h2>
-                        <p class="text-muted">Join our community of buyers and sellers today.</p>
+                        <h2 class="fw-bold text-dark">Create Your Account</h2>
+                        <p class="text-muted">Fill in your details to start buying and selling.</p>
                   </div>
 
                   <div class="card shadow-lg border-0 rounded-4">
@@ -20,81 +20,151 @@
                               <form method="post" class="needs-validation">
                                     {% csrf_token %}
 
-                                    <!-- Error Handling -->
+                                    <!-- Global Errors -->
                                     {% if form.errors %}
-                                    <div class="alert alert-danger border-0 small mb-4">
+                                    <div class="alert alert-danger shadow-sm">
                                           <ul class="mb-0">
                                                 {% for field in form %}
                                                 {% for error in field.errors %}
                                                 <li><strong>{{ field.label }}:</strong> {{ error }}</li>
                                                 {% endfor %}
                                                 {% endfor %}
+                                                {% for error in form.non_field_errors %}
+                                                <li>{{ error }}</li>
+                                                {% endfor %}
                                           </ul>
                                     </div>
                                     {% endif %}
 
-                                    <!-- Username Field -->
-                                    <div class="form-floating mb-3">
-                                          <input type="text" name="username" class="form-control border-0 bg-light"
-                                                id="id_username" placeholder="Username" required>
-                                          <label for="id_username"><i class="bi bi-at me-2"></i>Username</label>
-                                    </div>
-
-                                    <!-- Email Field -->
-                                    <div class="form-floating mb-3">
-                                          <input type="email" name="email" class="form-control border-0 bg-light"
-                                                id="id_email" placeholder="name@example.com" required>
-                                          <label for="id_email"><i class="bi bi-envelope me-2"></i>Email Address</label>
-                                    </div>
-
-                                    <div class="row g-2">
-                                          <!-- Password Field -->
+                                    <!-- Section: Account Basics -->
+                                    <h5 class="text-primary mb-3 fw-bold"><i class="bi bi-shield-lock me-2"></i>Account
+                                          Security</h5>
+                                    <div class="row g-3 mb-4">
                                           <div class="col-md-6">
-                                                <div class="form-floating mb-3">
-                                                      <input type="password" name="password"
-                                                            class="form-control border-0 bg-light" id="id_password"
-                                                            placeholder="Password" required>
-                                                      <label for="id_password"><i
-                                                                  class="bi bi-shield-lock me-2"></i>Password</label>
+                                                <div class="form-floating">
+                                                      <input type="text" name="username"
+                                                            class="form-control bg-light border-0" id="id_username"
+                                                            placeholder="Username" required>
+                                                      <label for="id_username">Username</label>
                                                 </div>
                                           </div>
-                                          <!-- Confirm Password -->
                                           <div class="col-md-6">
-                                                <div class="form-floating mb-3">
-                                                      <input type="password" name="password_confirm"
-                                                            class="form-control border-0 bg-light"
-                                                            id="id_password_confirm" placeholder="Confirm Password"
-                                                            required>
-                                                      <label for="id_password_confirm">Confirm</label>
+                                                <div class="form-floating">
+                                                      <input type="email" name="email"
+                                                            class="form-control bg-light border-0" id="id_email"
+                                                            placeholder="Email" required>
+                                                      <label for="id_email">Email Address</label>
+                                                </div>
+                                          </div>
+                                          <div class="col-md-6">
+                                                <div class="form-floating">
+                                                      <input type="password" name="password1" class="form-control bg-light border-0" id="id_password1" placeholder="Password" required>
+                                                      <label for="id_password1">Password</label>
+                                                </div>
+                                          </div>
+                                          <div class="col-md-6">
+                                                <div class="form-floating">
+                                                      <input type="password" name="password2" class="form-control bg-light border-0" id="id_password2" placeholder="Confirm" required>
+                                                      <label for="id_password2">Confirm Password</label>
                                                 </div>
                                           </div>
                                     </div>
 
-                                    <!-- Terms and Conditions -->
-                                    <div class="form-check mb-4 mt-2">
-                                          <input class="form-check-input" type="checkbox" id="terms" required>
-                                          <label class="form-check-label small text-secondary" for="terms">
-                                                I agree to the <a href="#" class="text-decoration-none">Terms of
-                                                      Service</a> and <a href="#" class="text-decoration-none">Privacy
-                                                      Policy</a>.
+                                    <!-- Section: Personal Info -->
+                                    <h5 class="text-primary mb-3 fw-bold"><i
+                                                class="bi bi-person-badge me-2"></i>Personal Details</h5>
+                                    <div class="row g-3 mb-4">
+                                          <div class="col-md-4">
+                                                <div class="form-floating">
+                                                      <input type="number" name="age"
+                                                            class="form-control bg-light border-0" id="id_age"
+                                                            placeholder="Age">
+                                                      <label for="id_age">Age</label>
+                                                </div>
+                                          </div>
+                                          <div class="col-md-4">
+                                                <div class="form-floating">
+                                                      <select name="gender" class="form-select bg-light border-0"
+                                                            id="id_gender">
+                                                            <option value="" selected disabled>Select Gender</option>
+                                                            <option value="M">Male</option>
+                                                            <option value="F">Female</option>
+                                                            <option value="O">Other</option>
+                                                      </select>
+                                                      <label for="id_gender">Gender</label>
+                                                </div>
+                                          </div>
+                                          <div class="col-md-4">
+                                                <div class="form-floating">
+                                                      <input type="text" name="mobile_no"
+                                                            class="form-control bg-light border-0" id="id_mobile"
+                                                            placeholder="Mobile">
+                                                      <label for="id_mobile">Mobile No</label>
+                                                </div>
+                                          </div>
+                                    </div>
+
+                                    <!-- Section: Address -->
+                                    <h5 class="text-primary mb-3 fw-bold"><i class="bi bi-geo-alt me-2"></i>Shipping
+                                          Address</h5>
+                                    <div class="row g-3 mb-4">
+                                          <div class="col-md-6">
+                                                <div class="form-floating">
+                                                      <input type="text" name="city_village"
+                                                            class="form-control bg-light border-0" id="id_city"
+                                                            placeholder="City">
+                                                      <label for="id_city">City / Village</label>
+                                                </div>
+                                          </div>
+                                          <div class="col-md-6">
+                                                <div class="form-floating">
+                                                      <input type="text" name="state"
+                                                            class="form-control bg-light border-0" id="id_state"
+                                                            placeholder="State">
+                                                      <label for="id_state">State</label>
+                                                </div>
+                                          </div>
+                                          <div class="col-md-6">
+                                                <div class="form-floating">
+                                                      <input type="text" name="country"
+                                                            class="form-control bg-light border-0" id="id_country"
+                                                            value="India" placeholder="Country">
+                                                      <label for="id_country">Country</label>
+                                                </div>
+                                          </div>
+                                          <div class="col-md-6">
+                                                <div class="form-floating">
+                                                      <input type="text" name="pincode"
+                                                            class="form-control bg-light border-0" id="id_pin"
+                                                            placeholder="Pin">
+                                                      <label for="id_pin">Pincode</label>
+                                                </div>
+                                          </div>
+                                    </div>
+
+                                    <!-- Terms & Submit -->
+                                    <div class="form-check mb-4">
+                                          <input class="form-check-input" type="checkbox" id="termsCheck" required>
+                                          <label class="form-check-label small text-muted" for="termsCheck">
+                                                I agree to the terms and conditions and privacy policy.
                                           </label>
                                     </div>
 
-                                    <!-- Submit Button -->
                                     <div class="d-grid">
                                           <button type="submit"
                                                 class="btn btn-primary btn-lg py-3 rounded-3 shadow-sm fw-bold">
-                                                Create My Account
+                                                Register Account
                                           </button>
                                     </div>
                               </form>
                         </div>
                   </div>
 
-                  <!-- Login Redirect -->
+                  <!-- Footer Link -->
                   <div class="text-center mt-4">
-                        <p class="text-secondary">Already have an account?
-                              <a href="{% url 'login' %}" class="text-primary fw-bold text-decoration-none">Sign In</a>
+                        <p class="text-secondary">Already a member?
+                              <a href="{% url 'login' %}" class="text-primary fw-bold text-decoration-none">Sign In
+                                    here</a>
                         </p>
                   </div>
 

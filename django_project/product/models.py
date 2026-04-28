@@ -33,7 +33,7 @@ class Product(models.Model):
       ]
       
       # Link product to a specific user who acts as the seller 
-      seller = models.ForeignKey(User, on_delete=models.CASCADE, related_name='products')
+      seller = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='products')
       
       name = models.CharField(max_length=200)
       description = models.TextField(max_length=1000)
@@ -64,7 +64,7 @@ class Product(models.Model):
 # ORDER MODEL (Buyer Side) 
 class Order(models.Model):
       # link order to the user who is buying
-      buyer = models.ForeignKey(User, on_delete=models.CASCADE, related_name="orders")
+      buyer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="orders")
       created_at = models.DateTimeField(auto_now_add=True)
       is_returned = models.BooleanField(default=False)
       is_shipped = models.BooleanField(default=False, null=True)
