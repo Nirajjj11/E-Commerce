@@ -12,3 +12,12 @@
     object-position: center;
     background-color: #f8f9fa; /* Light grey background for transparent images */
 }
+.product-card-img {
+        transition: transform .3s;
+    }
+    .product-card-img:hover {
+        transform: scale(1.05);
+    }
+    .shadow-xs {
+        box-shadow: 0 .125rem .25rem rgba(0,0,0,.045)!important;
+    }

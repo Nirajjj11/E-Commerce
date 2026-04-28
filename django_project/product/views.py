@@ -7,8 +7,14 @@ from .models import Product, Order, OrderItems, OrderItemTracking
 # Create your views here.
 class ProductListView(ListView):
       model = Product
-      template_name = 'product/product_list.html'
+      template_name = 'product_list.html'
       context_object_name = "products"
       
       def get_queryset(self):
             return Product.objects.all().order_by('-created_at')
+      
+class ProductDetailView(DetailView):
+      model = Product
+      template_name = 'product_details.html'
+      context_object_name = "product"
+      
