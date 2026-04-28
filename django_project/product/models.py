@@ -43,15 +43,15 @@ class Product(models.Model):
       created_at = models.DateTimeField(auto_now_add=True)
       image = models.ImageField(upload_to='product_images', blank=True, null=True)
       
-      marked_price = models.DecimalField(max_digits=10, decimal_places=2)
+      market_price = models.DecimalField(max_digits=10, decimal_places=2)
       discounts = models.PositiveIntegerField(default=0, help_text="Enter percentage (e.g., 10 for 10%)")
       
       actual_price = models.DecimalField(max_digits=10, decimal_places=2, editable=False)
       
       def save(self, *args, **kwargs):
             # Calculate actual_price: Marked Price - (Marked Price * Discount / 100)
-            discount_amount = (self.marked_price * self.discounts) / 100
-            self.actual_price = self.marked_price - discount_amount
+            discount_amount = (self.market_price * self.discounts) / 100
+            self.actual_price = self.market_price - discount_amount
             super().save(*args, **kwargs)
             
       def __str__(self):

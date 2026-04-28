@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container my-5">
+      <div class="row justify-content-center">
+            <div class="col-lg-8">
+                  <div class="card shadow-lg border-0 rounded-4">
+                        <div class="card-header bg-dark text-white p-4 rounded-top-4">
+                              <h3 class="mb-0"><i class="bi bi-plus-circle me-2"></i>List New Product</h3>
+                              <small class="opacity-75">Fill in the details below to reach thousands of buyers.</small>
+                        </div>
+                        <div class="card-body p-4 p-md-5">
+                              <form method="post" enctype="multipart/form-data" class="needs-validation">
+                                    {% csrf_token %}
+
+                                    <!-- Product Name -->
+                                    <div class="form-floating mb-4">
+                                          <input type="text" name="name" class="form-control" id="id_name"
+                                                placeholder="Product Name" required>
+                                          <label for="id_name">Product Title</label>
+                                    </div>
+
+                                    <!-- Category & Sub-Category Row -->
+                                    <div class="row g-3 mb-4">
+                                          <div class="col-md-6">
+                                                <div class="form-floating">
+                                                      <select name="category" class="form-select" id="id_category">
+                                                            {% for val, label in form.fields.category.choices %}
+                                                            <option value="{{ val }}">{{ label }}</option>
+                                                            {% endfor %}
+                                                      </select>
+                                                      <label for="id_category">Main Category</label>
+                                                </div>
+                                          </div>
+                                          <div class="col-md-6">
+                                                <div class="form-floating">
+                                                      <select name="sub_category" class="form-select"
+                                                            id="id_sub_category">
+                                                            {% for val, label in form.fields.sub_category.choices %}
+                                                            <option value="{{ val }}">{{ label }}</option>
+                                                            {% endfor %}
+                                                      </select>
+                                                      <label for="id_sub_category">Sub Category</label>
+                                                </div>
+                                          </div>
+                                    </div>
+
+                                    <!-- Description -->
+                                    <div class="form-floating mb-4">
+                                          <textarea name="description" class="form-control" id="id_description"
+                                                placeholder="Description" style="height: 120px"></textarea>
+                                          <label for="id_description">Detailed Description</label>
+                                    </div>
+
+                                    <!-- Pricing Row -->
+                                    <div class="row g-3 mb-4">
+                                          <div class="col-md-4">
+                                                <div class="input-group">
+                                                      <span class="input-group-text">₹</span>
+                                                      <div class="form-floating">
+                                                            <input type="number" name="marked_price" step="0.01"
+                                                                  class="form-control" id="id_marked_price"
+                                                                  placeholder="0.00" required>
+                                                            <label for="id_marked_price">Market Price</label>
+                                                      </div>
+                                                </div>
+                                          </div>
+                                          <div class="col-md-4">
+                                                <div class="input-group">
+                                                      <div class="form-floating">
+                                                            <input type="number" name="discounts" class="form-control"
+                                                                  id="id_discounts" placeholder="0">
+                                                            <label for="id_discounts">Discount</label>
+                                                      </div>
+                                                      <span class="input-group-text">%</span>
+                                                </div>
+                                          </div>
+                                          <div class="col-md-4">
+                                                <div class="form-floating">
+                                                      <input type="number" name="stocks" class="form-control"
+                                                            id="id_stocks" placeholder="100">
+                                                      <label for="id_stocks">Initial Stock</label>
+                                                </div>
+                                          </div>
+                                    </div>
+
+                                    <!-- Image Upload -->
+                                    <div class="mb-4">
+                                          <label for="id_image" class="form-label fw-bold">Product Image</label>
+                                          <input class="form-control form-control-lg" type="file" name="image"
+                                                id="id_image">
+                                          <div class="form-text">High-quality square images (1:1) work best.</div>
+                                    </div>
+
+                                    <!-- Buttons -->
+                                    <div class="d-flex gap-3 pt-3">
+                                          <button type="submit" class="btn btn-dark btn-lg px-5">Publish
+                                                Product</button>
+                                          <a href="{% url 'home' %}"
+                                                class="btn btn-outline-secondary btn-lg px-4">Cancel</a>
+                                    </div>
+                              </form>
+                        </div>
+                  </div>
+            </div>
+      </div>
+</div>
+
+{% endblock content %}
