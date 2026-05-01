@@ -1,64 +1,32 @@
-/* --- Product Image Styling --- */
 .card-img-top {
   width: 100%;
   height: 200px;
-  object-fit: contain;
-  /* var(--bs-tertiary-bg) provides a slight contrast from the main background in both modes */
-  background-color: var(--bs-tertiary-bg);
+  object-fit: contain; /* or 'cover' if you want them to fill the space */
 }
-
+/* Standardizing the product card images */
 .product-card-img {
   width: 100%;
-  height: 200px;
-  object-fit: cover;
+  height: 200px; /* You can adjust this height as needed */
+  object-fit: cover; /* This crops the image to fit the box perfectly */
   object-position: center;
-  background-color: var(--bs-tertiary-bg);
-  transition: transform 0.3s ease;
 }
-
+.product-card-img {
+  transition: transform 0.3s;
+}
 .product-card-img:hover {
   transform: scale(1.05);
 }
-
-/* --- Global Layout Styling --- */
-body {
-  /* This is the key: these variables switch automatically between light and dark */
-  background-color: var(--bs-body-bg);
-  color: var(--bs-body-color);
-  min-height: 100vh;
+.shadow-xs {
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.045) !important;
 }
 
-/* --- Card Styling --- */
+
 .card {
   border: none;
-  /* Ensures the card background also changes to dark grey in dark mode */
-  background-color: var(--bs-card-bg);
-  color: var(--bs-card-color);
-}
-
-.shadow-xs {
-  /* Using an RGBA variable ensures the shadow isn't too harsh in dark mode */
-  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
-}
-
-/* --- Form & Input Styling --- */
-.form-control, .form-select {
-  background-color: var(--bs-body-bg);
-  color: var(--bs-body-color);
-  border-color: var(--bs-border-color);
 }
 
 .form-control:focus,
 .form-select:focus {
-  /* Adapts the focus ring to the theme text color */
-  border-color: var(--bs-primary);
-  box-shadow: 0 0 0 0.25rem rgba(var(--bs-primary-rgb), 0.25);
-  background-color: var(--bs-body-bg);
-  color: var(--bs-body-color);
-}
-
-/* --- Navbar Adjustments (Optional) --- */
-.navbar {
-  background-color: var(--bs-body-bg);
-  border-bottom: 1px solid var(--bs-border-color);
+  border-color: #212529;
+  box-shadow: 0 0 0 0.25rem rgba(33, 37, 41, 0.1);
 }
