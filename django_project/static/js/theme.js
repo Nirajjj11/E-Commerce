@@ -1,30 +1,36 @@
-const themeToggle = () => {
-      const htmlElement = document.documentElement;
-      const currentTheme = htmlElement.getAttribute('data-bs-theme');
-      const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+document.addEventListener("DOMContentLoaded", function () {
+      const btn = document.getElementById("themeToggle");
+      const icon = btn.querySelector("i");
+      const body = document.body;
 
-      htmlElement.setAttribute('data-bs-theme', newTheme);
-      localStorage.setItem('theme', newTheme);
-      updateIcon(newTheme);
-};
+      if (!btn) return;
 
-const updateIcon = (theme) => {
-      const icon = document.getElementById('themeIcon');
-      if (icon) {
-            if (theme === 'dark') {
-                  icon.classList.replace('bi-moon-stars-fill', 'bi-sun-fill');
+      function updateIcon() {
+            if (body.classList.contains("dark-mode")) {
+                  icon.classList.remove("bi-moon");
+                  icon.classList.add("bi-sun");
             } else {
-                  icon.classList.replace('bi-sun-fill', 'bi-moon-stars-fill');
+                  icon.classList.remove("bi-sun");
+                  icon.classList.add("bi-moon");
             }
       }
-};
 
-// Apply theme immediately to prevent white flash
-const savedTheme = localStorage.getItem('theme') || 'light';
-document.documentElement.setAttribute('data-bs-theme', savedTheme);
+      // Load saved theme
+      if (localStorage.getItem("theme") === "dark") {
+            body.classList.add("dark-mode");
+      }
 
-window.addEventListener('DOMContentLoaded', () => {
-      updateIcon(savedTheme);
-      const btn = document.getElementById('themeToggle');
-      if (btn) btn.addEventListener('click', themeToggle);
+      updateIcon();
+
+      btn.addEventListener("click", () => {
+            body.classList.toggle("dark-mode");
+
+            if (body.classList.contains("dark-mode")) {
+                  localStorage.setItem("theme", "dark");
+            } else {
+                  localStorage.setItem("theme", "light");
+            }
+
+            updateIcon();
+      });
 });
