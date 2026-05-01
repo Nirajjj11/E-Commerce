@@ -15,21 +15,18 @@
 
                         {% if user.is_authenticated %}
                         {% if user.is_approved_seller %}
-                        <!-- Case 1: Approved Seller -->
                         <li class="nav-item">
                               <a class="nav-link text-primary fw-bold" href="{% url 'product_create' %}">
                                     <i class="bi bi-plus-circle-fill"></i> Add Product
                               </a>
                         </li>
                         {% elif user.product_category %}
-                        <!-- Case 2: Registered as Seller but NOT approved yet -->
                         <li class="nav-item">
                               <span class="nav-link text-warning small mt-1 italic">
                                     <i class="bi bi-hourglass-split"></i> Wait for Admin Approval
                               </span>
                         </li>
                         {% endif %}
-                        <!-- Case 3: Normal Buyers see nothing extra here -->
                         {% endif %}
                   </ul>
 
@@ -39,26 +36,18 @@
                               <i id="themeIcon" class="bi bi-moon-stars-fill fs-5"></i>
                         </button>
 
-                        <!-- <button id="themeToggle" class="btn  btn-sm">
-                              <i class="bi bi-moon"></i>
-                        </button> -->
-
                         {% if user.is_authenticated %}
                         <div class="dropdown">
-                              <a class="btn btn-outline-secondary dropdown-toggle px-3" href="#" role="button"
-                                    data-bs-toggle="dropdown">
+                              <a class="btn btn-outline-secondary dropdown-toggle px-3" href="#" role="button" data-bs-toggle="dropdown">
                                     <i class="bi bi-person-circle me-1"></i> {{ user.username }}
                               </a>
                               <ul class="dropdown-menu dropdown-menu-end shadow border-0">
                                     <li><a class="dropdown-item" href="{% url 'profile' %}">Profile</a></li>
-                                    <li>
-                                          <hr class="dropdown-divider">
-                                    </li>
+                                    <li><hr class="dropdown-divider"></li>
                                     <li>
                                           <form action="{% url 'logout' %}" method="post" class="px-2">
                                                 {% csrf_token %}
-                                                <button type="submit"
-                                                      class="btn btn-danger btn-sm w-100">Logout</button>
+                                                <button type="submit" class="btn btn-danger btn-sm w-100">Logout</button>
                                           </form>
                                     </li>
                               </ul>
