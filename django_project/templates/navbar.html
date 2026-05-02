@@ -14,27 +14,27 @@
                         </li>
 
                         {% if user.is_authenticated %}
-                        {% if user.is_approved_seller %}
-                        <li class="nav-item">
-                              <a class="nav-link text-primary fw-bold" href="{% url 'product_create' %}">
-                                    <i class="bi bi-plus-circle-fill"></i> Add Product
-                              </a>
-                        </li>
-                        {% elif user.product_category %}
-                        <li class="nav-item">
-                              <span class="nav-link text-warning small mt-1 italic">
-                                    <i class="bi bi-hourglass-split"></i> Wait for Admin Approval
-                              </span>
-                        </li>
-                        {% endif %}
+                              {% if user.is_approved_seller %}
+                                    <li class="nav-item">
+                                          <a class="nav-link text-primary fw-bold" href="{% url 'product_create' %}">
+                                                <i class="bi bi-plus-circle-fill"></i> Add Product
+                                          </a>
+                                    </li>
+                                    {% elif user.category %}
+                                    <li class="nav-item">
+                                          <span class="nav-link text-warning small mt-1 italic">
+                                                <i class="bi bi-hourglass-split"></i> Wait for Admin Approval
+                                          </span>
+                                    </li>
+                              {% endif %}
                         {% endif %}
                   </ul>
 
                   <div class="d-flex align-items-center">
                         <!-- Theme Toggle Button -->
-                        <!-- <button id="themeToggle" class="btn btn-link nav-link me-3 p-0 border-0 text-decoration-none">
+                        <button id="themeToggle" class="btn btn-link nav-link me-3 p-0 border-0 text-decoration-none">
                               <i id="themeIcon" class="bi bi-moon-stars-fill fs-5"></i>
-                        </button> -->
+                        </button>
 
                         {% if user.is_authenticated %}
                         <div class="dropdown">
