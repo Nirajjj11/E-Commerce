@@ -12,6 +12,15 @@ class ProductListView(ListView):
       
       def get_queryset(self):
             return Product.objects.all().order_by('-created_at')
+
+class MyProductListView(LoginRequiredMixin, ListView):
+      model = Product
+      template_name = 'product_list.html'
+      context_object_name = "products"
+      ordering = ['-date']
+      
+      def get_queryset(self):
+            return Product.objects.filter(seller = self.request.user)
             
 class ProductDetailView(DetailView):
       model = Product
