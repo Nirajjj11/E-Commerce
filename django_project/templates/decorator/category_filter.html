@@ -1,8 +1,9 @@
+{% if not request.GET.q %}
 <div class="d-flex flex-wrap justify-content-center gap-2 mb-4">
       <!-- All -->
       <a href="{% url 'home' %}"
             class="btn rounded-pill px-3 py-2 fw-semibold shadow-sm
-            {% if not selected_category %}
+            {% if not selected_category and request.GET.q %}
                   btn-warning text-dark
             {% else %}
                   btn-outline-warning
@@ -22,3 +23,4 @@
       </a>
       {% endfor %}
 </div>
+{% endif %}
