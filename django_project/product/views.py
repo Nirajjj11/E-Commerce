@@ -27,7 +27,7 @@ class ProductDetailView(DetailView):
       template_name = 'product_details.html'
       context_object_name = "product"
       
-# --- for search views ---
+# --- FOR SEARCH VIEWS ---
 
 class SearchProductView(ListView):
       model = Product
@@ -35,12 +35,9 @@ class SearchProductView(ListView):
       context_object_name = "products"
 
       def get_queryset(self):
-
             query = self.request.GET.get("q")
-
             if query:
                   return Product.objects.filter(name__icontains=query)
-
             return Product.objects.none()
 
 # --- SELLER PROTECTED VIEWS ---
