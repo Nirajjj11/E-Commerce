@@ -27,6 +27,9 @@
 <body class="bg-body text-body">
       {% include 'decorator/navbar.html' %}
 
+      {% block full_width %}
+      {% endblock %}
+
       <div class="container mt-4">
             {% block content %}{% endblock %}
       </div>
