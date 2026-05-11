@@ -1,0 +1,24 @@
+<div class="d-flex flex-wrap justify-content-center gap-2 mb-4">
+      <!-- All -->
+      <a href="{% url 'home' %}"
+            class="btn rounded-pill px-3 py-2 fw-semibold shadow-sm
+            {% if not selected_category %}
+                  btn-warning text-dark
+            {% else %}
+                  btn-outline-warning
+            {% endif %}">
+            All
+      </a>
+      <!-- Categories -->
+      {% for cat_val, cat_label in all_categories %}
+      <a href="{% url 'home' %}?category={{ cat_val }}&q={{ search_query }}"
+            class="btn rounded-pill px-3 py-2 fw-semibold shadow-sm
+            {% if selected_category == cat_val %}
+                  btn-warning text-dark
+            {% else %}
+                  btn-outline-warning
+            {% endif %}">
+            {{ cat_label }}
+      </a>
+      {% endfor %}
+</div>

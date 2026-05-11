@@ -1,14 +1,13 @@
 {% extends "base.html" %}
+
 {% block full_width %}
-
-      {% if not request.GET.q %}
-            {% include "decorator/carousel.html" %}
-      {% endif %}
-
+{% if not request.GET.q and not selected_category %}
+{% include "decorator/carousel.html" %}
+{% endif %}
 {% endblock %}
+
 {% block content %}
-
-
+{% include "decorator/category_filter.html" %}
 <div class="row row-cols-1 row-cols-md-4 g-4">
 
       {% for product in products %}
@@ -29,8 +28,8 @@
 
                               <div class="mt-2">
                                     <span class="h5 fw-bold">₹{{ product.actual_price }}</span>
-                                    <span class="text-muted text-decoration-line-through ms-2 small">₹{{
-                                          product.marked_price }}</span>
+                                    <span class="text-muted text-decoration-line-through ms-2 small">₹{{product.marked_price
+                                          }}</span>
                                     <span class="text-success ms-2 small fw-semibold">{{ product.discounts }}%
                                           off</span>
                               </div>
@@ -39,6 +38,10 @@
                   </a>
             </div>
       </div>
+      {% empty %}
+      <h4 class="text-center">
+            No products found 😢
+      </h4>
       {% endfor %}
 </div>
 

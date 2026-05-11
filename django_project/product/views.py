@@ -9,9 +9,38 @@ class ProductListView(ListView):
       model = Product
       template_name = 'product_list.html'
       context_object_name = "products"
-      
+
       def get_queryset(self):
-            return Product.objects.all().order_by('-created_at')
+
+            queryset = Product.objects.all().order_by('-created_at')
+
+            # Search Query
+            query = self.request.GET.get("q")
+
+            # Category Query
+            category = self.request.GET.get("category")
+
+            # Apply Search
+            if query:
+                  queryset = queryset.filter(name__icontains=query)
+
+            # Apply Category Filter
+            if category:
+                  queryset = queryset.filter(category=category)
+
+            return queryset
+
+      def get_context_data(self, **kwargs):
+
+            context = super().get_context_data(**kwargs)
+
+            context["all_categories"] = Product.CATEGORY_CHOICES
+
+            context["selected_category"] = self.request.GET.get("category")
+
+            context["search_query"] = self.request.GET.get("q", "")
+
+            return context
 
 class MyProductListView(LoginRequiredMixin, ListView):
       model = Product
