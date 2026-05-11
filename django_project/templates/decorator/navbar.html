@@ -2,7 +2,7 @@
 <nav class="navbar navbar-expand-lg border-bottom shadow-sm bg-primary">
       <div class="container-fluid">
             <a class="navbar-brand fw-bold" href="{% url 'home' %}">
-                  <i class="fas fa-shopping-bag my-2 me-2"></i>OnlineBazar</a>
+                  <i class="fas fa-shopping-bag mx-4 me-2"></i>OnlineBazar</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                   <span class="navbar-toggler-icon"></span>
             </button>
@@ -64,8 +64,8 @@
                         {% else %}
                         <div class="d-flex gap-2">
                               <a href="{% url 'login' %}"
-                                    class="btn btn-sm btn-outline-primary border-1 text-white">Login</a>
-                              <a href="{% url 'signup' %}" class="btn btn-sm btn-primary border bg-warning">Signup</a>
+                                    class="btn btn-outline-light btn-sm">Login</a>
+                              <a href="{% url 'signup' %}" class="btn btn-warning btn-sm fw-bold">Signup</a>
                         </div>
                         {% endif %}
                   </div>
