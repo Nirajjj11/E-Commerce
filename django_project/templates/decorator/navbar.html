@@ -18,7 +18,9 @@
                               <i id="themeIcon" class="bi bi-moon-stars-fill fs-5"></i>
                         </button>
                         {% if user.is_authenticated %}
-                        <a class="navbar-brand fw-bold " href="{% url 'user_dashboard' %}"> Hi, {{ user.username }} !</a>
+                        <a class="nav-link" href="{% url 'cart' %}"><i class="fas fa-shopping-cart"></i></a>
+                        <a class="navbar-brand fw-bold mx-4 " href="{% url 'user_dashboard' %}"> Hi, {{ user.username }}
+                              !</a>
                         <form action="{% url 'logout' %}" method="post" class="px-2">
                               {% csrf_token %}
                               <button type="submit" class="btn btn-danger btn-sm w-100">Logout</button>

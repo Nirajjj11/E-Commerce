@@ -18,6 +18,13 @@ class WishListView(LoginRequiredMixin, ListView):
                   user=self.request.user
             ).select_related("product").order_by("-added_at")
       
+# Add to wishlist
+class AddToWishlistView(LoginRequiredMixin, View):
+      def get(self, request,pk):
+            product = get_object_or_404(Product, pk=pk)
+            wishlist_item , created = WishList.objects.get_or_create(user = request.user, product = product)
+            return redirect("wishlist")
+      
 # REMOVE FROM WISHLIST
 class RemoveFromWishlistView(LoginRequiredMixin, View):
       def get(self, request, pk):
