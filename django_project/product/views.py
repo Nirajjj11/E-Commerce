@@ -1,9 +1,10 @@
-from django.shortcuts import render, redirect
-from django.views.generic import ListView, DeleteView, DetailView, CreateView, UpdateView
+from django.shortcuts import render, redirect, get_object_or_404
+from django.views.generic import ListView, DeleteView, DetailView, CreateView, UpdateView, View
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy, reverse
 from django.contrib import messages
 from .models import Product, Order, OrderItems, OrderItemTracking
+from users.models import *
 
 class ProductListView(ListView):
       model = Product
@@ -48,6 +49,21 @@ class ProductDetailView(DetailView):
       model = Product
       template_name = 'product_details.html'
       context_object_name = "product"
+      
+      def get_context_data(self, **kwargs):
+            context = super().get_context_data(**kwargs)
+            if self.request.user.is_authenticated:
+                  from users.models import WishList
+                  wishlist_products = WishList.objects.filter(
+                        user=self.request.user
+                  ).values_list(
+                        "product_id",
+                        flat=True
+                  )
+                  context["wishlist_products"] = wishlist_products
+            else:
+                  context["wishlist_products"] = []
+            return context
       
 # --- FOR SEARCH VIEWS ---
 

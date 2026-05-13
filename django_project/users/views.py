@@ -18,13 +18,6 @@ class WishListView(LoginRequiredMixin, ListView):
                   user=self.request.user
             ).select_related("product").order_by("-added_at")
       
-# Add to wishlist
-class AddToWishlistView(LoginRequiredMixin, View):
-      def get(self, request,pk):
-            product = get_object_or_404(Product, pk=pk)
-            wishlist_item , created = WishList.objects.get_or_create(user = request.user, product = product)
-            return redirect("wishlist")
-      
 # REMOVE FROM WISHLIST
 class RemoveFromWishlistView(LoginRequiredMixin, View):
       def get(self, request, pk):
@@ -163,3 +156,20 @@ class CheckoutView(LoginRequiredMixin, TemplateView):
             # Clear cart
             cart_items.delete()
             return redirect("dashboard")
+      
+class ToggleWishlistView(LoginRequiredMixin, View):
+      def get(self, request, pk):
+            product = get_object_or_404( Product,pk=pk)
+            wishlist_item = WishList.objects.filter( user=request.user,product=product)
+            # Remove if already exists
+            if wishlist_item.exists():
+                  wishlist_item.delete()
+                  messages.info( request, "Removed from wishlist")
+
+            # Add if not exists
+            else:
+                  WishList.objects.create( user=request.user,product=product )
+                  messages.success( request,"Added to wishlist")
+            return redirect(
+                  request.META.get( "HTTP_REFERER", "home" )
+            )

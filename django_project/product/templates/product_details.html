@@ -5,8 +5,12 @@
       <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                   <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
-                  <li class="breadcrumb-item active"><a href="{% url 'home' %}?category={{ product.category }}">{{ product.get_category_display }}</a></li>
-                  <li class="breadcrumb-item active" aria-current="page"><a href="{% url 'home' %}?sub_category={{ product.sub_category }}">{{ product.get_sub_category_display }}</a></li>
+                  <li class="breadcrumb-item active">
+                        <a href="{% url 'home' %}?category={{ product.category }}">
+                              {{product.get_category_display }}</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">
+                        <a href="{% url 'home' %}?sub_category={{ product.sub_category }}">
+                              {{ product.get_sub_category_display }}</a></li>
                   {% if user == product.seller and user.is_approved_seller %}
                   <a href="{% url 'product_update' product.pk %}" class="btn mx-2 ms-auto btn-warning">Edit</a>
                   <a href="{% url 'product_delete' product.pk %}" class="btn btn-danger ">Delete</a>
@@ -55,11 +59,11 @@
                   <div class="stock-status mb-4">
                         {% if product.stocks > 10 %}
                         <span class="text-success fw-bold">
-                              <i class="bi bi-check-circle"></i> 
+                              <i class="bi bi-check-circle"></i>
                               In Stock ({{ product.stocks }} units left)</span>
                         {% elif product.stocks > 0 %}
                         <span class="text-warning fw-bold">
-                              <i class="bi bi-exclamation-triangle"></i> 
+                              <i class="bi bi-exclamation-triangle"></i>
                               Only {{ product.stocks }} left - Order Soon!</span>
                         {% else %}
                         <span class="text-danger fw-bold"><i class="bi bi-x-circle"></i> Out of Stock</span>
@@ -83,7 +87,7 @@
                               {% endif %}
                         </a>
                         <!-- Wishlist -->
-                        <a href="{% url 'add_to_wishlist' product.pk %}" class="wishlist-btn">
+                        <a href="{% url 'toggle_wishlist' product.pk %}" class="wishlist-btn">
                               {% if product.id in wishlist_products %}
                               <i class="bi bi-heart-fill text-danger"></i>
                               {% else %}
