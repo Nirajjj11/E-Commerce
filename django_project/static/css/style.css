@@ -17,7 +17,7 @@
   transform: scale(1.05);
 }
 .shadow-xs {
-  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.045) !important;
+  box-shadow: 0 0.125rem 0.25rem rgba(68, 63, 63, 0.045) !important;
 }
 
 
@@ -27,6 +27,6 @@
 
 .form-control:focus,
 .form-select:focus {
-  border-color: #212529;
+  border-color: #13365a;
   box-shadow: 0 0 0 0.25rem rgba(33, 37, 41, 0.1);
 }

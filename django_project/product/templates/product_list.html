@@ -10,6 +10,7 @@
 {% if not request.user.is_superuser and not request.user.is_approved_seller %}
       {% include "decorator/category_filter.html" %}
 {% endif %}
+
 <div class="row row-cols-1 row-cols-md-4 g-4">
 
       {% for product in products %}
