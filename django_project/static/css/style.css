@@ -1,94 +1,121 @@
-.card-img-top {
-  width: 100%;
-  height: 200px;
-  object-fit: contain; /* or 'cover' if you want them to fill the space */
-}
-/* Standardizing the product card images */
-.product-card-img {
-  width: 100%;
-  height: 200px; /* You can adjust this height as needed */
-  object-fit: cover; /* This crops the image to fit the box perfectly */
-  object-position: center;
-}
-.product-card-img {
-  transition: transform 0.3s;
-}
-.product-card-img:hover {
-  transform: scale(1.05);
-}
-.shadow-xs {
-  box-shadow: 0 0.125rem 0.25rem rgba(68, 63, 63, 0.045) !important;
-}
+/* GLOBAL TRANSITIONS */
 
-
-.card {
-  border: none;
+body,
+.card,
+.navbar,
+.dropdown-menu,
+.form-control,
+.form-select,
+.table,
+.nav-link,
+.btn,
+input,
+textarea,
+a{
+    transition:
+        background-color 0.3s ease,
+        color 0.3s ease,
+        border-color 0.3s ease,
+        box-shadow 0.3s ease;
 }
-
-.form-control:focus,
-.form-select:focus {
-  border-color: #13365a;
-  box-shadow: 0 0 0 0.25rem rgba(33, 37, 41, 0.1);
+/* DARK MODE ROOT */
+[data-bs-theme="dark"]{
+    --bs-body-bg:#000000;
+    --bs-body-color:#ffffff;
+    --bs-border-color:#1a1a1a;
+    --bs-card-bg:#050505;
+    --bs-card-color:#ffffff;
+    --bs-secondary-bg:#0d0d0d;
+    --bs-tertiary-bg:#111111;
+    --bs-light:#111111;
 }
-/* Cart Button */
-.cart-btn{
-    background: linear-gradient(135deg,#ff9f00,#ff6a00);
-    color:white;
-    border:none;
-    border-radius:16px;
-    transition:0.3s;
-    box-shadow:0 8px 20px rgba(255,106,0,0.25);
+/* BODY */
+[data-bs-theme="dark"] body{
+    background:#000 !important;
+    color:#fff !important;
 }
-
-.cart-btn:hover{
-    transform:translateY(-3px);
-    color:white;
-    box-shadow:0 12px 24px rgba(255,106,0,0.35);
+/* NAVBAR */
+[data-bs-theme="dark"] .navbar{
+    background:#000 !important;
+    border-bottom:1px solid #111;
 }
-
-/* Buy Button */
-.buy-btn{
-    background: linear-gradient(135deg,#2874f0,#0056d6);
-    color:white;
-    border:none;
-    border-radius:16px;
-    transition:0.3s;
-    box-shadow:0 8px 20px rgba(0,86,214,0.25);
+/* CARDS */
+[data-bs-theme="dark"] .card{
+    background:#050505 !important;
+    color:#fff !important;
+    border:1px solid #151515 !important;
+    box-shadow:0 4px 20px rgba(255,255,255,0.03);
 }
-
-.buy-btn:hover{
-    transform:translateY(-3px);
-    color:white;
-    box-shadow:0 12px 24px rgba(0,86,214,0.35);
+/* DROPDOWN */
+[data-bs-theme="dark"] .dropdown-menu{
+    background:#050505 !important;
+    border:1px solid #1a1a1a !important;
 }
-
-/* Wishlist Heart */
-.wishlist-btn{
-    width:65px;
-    height:65px;
-    border-radius:50%;
-    background:white;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    text-decoration:none;
-    font-size:30px;
-    border:2px solid #eee;
-    transition:0.3s;
-    box-shadow:0 6px 18px rgba(0,0,0,0.08);
+[data-bs-theme="dark"] .dropdown-item{
+    color:#fff !important;
 }
-
-.wishlist-btn:hover{
-    transform:scale(1.08);
-    background:#fff5f5;
-    border-color:#ff4d6d;
+[data-bs-theme="dark"] .dropdown-item:hover{
+    background:#111 !important;
 }
-
-.wishlist-btn i{
-    transition:0.3s;
+/* FORMS */
+[data-bs-theme="dark"] .form-control,
+[data-bs-theme="dark"] .form-select{
+    background:#0a0a0a !important;
+    color:#fff !important;
+    border:1px solid #222 !important;
 }
-
-.wishlist-btn:hover i{
-    transform:scale(1.15);
+[data-bs-theme="dark"] .form-control:focus,
+[data-bs-theme="dark"] .form-select:focus{
+    background:#0a0a0a !important;
+    color:#fff !important;
+    border-color:#2874f0 !important;
+    box-shadow:0 0 0 0.2rem rgba(40,116,240,0.25);
 }
-
+/* TABLES */
+[data-bs-theme="dark"] .table{
+    color:#fff !important;
+}
+[data-bs-theme="dark"] .table-light{
+    background:#111 !important;
+    color:#fff !important;
+}
+/* LINKS */
+[data-bs-theme="dark"] a{
+    color:#5aa8ff;
+}
+/* SIDEBAR LINKS */
+[data-bs-theme="dark"] .nav-link{
+    color:#fff !important;
+}
+[data-bs-theme="dark"] .nav-link:hover{
+    background:#111;
+    border-radius:10px;
+}
+/* TEXT COLORS */
+[data-bs-theme="dark"] .text-muted{
+    color:#9d9d9d !important;
+}
+/* WISHLIST BUTTON */
+[data-bs-theme="dark"] .wishlist-btn{
+    background:#0a0a0a;
+    border:1px solid #222;
+}
+/* FOOTER */
+[data-bs-theme="dark"] footer{
+    background:#000;
+    border-top:1px solid #111;
+}
+/* SCROLLBAR */
+[data-bs-theme="dark"] ::-webkit-scrollbar{
+    width:10px;
+}
+[data-bs-theme="dark"] ::-webkit-scrollbar-track{
+    background:#050505;
+}
+[data-bs-theme="dark"] ::-webkit-scrollbar-thumb{
+    background:#222;
+    border-radius:10px;
+}
+[data-bs-theme="dark"] ::-webkit-scrollbar-thumb:hover{
+    background:#333;
+}
