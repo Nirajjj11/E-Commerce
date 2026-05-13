@@ -13,12 +13,15 @@
                         <button class="btn btn-warning fw-bold" type="submit"><i class="fas fa-search"></i></button>
                   </form>
                   <div class="d-flex align-items-center">
-                        <!-- Theme Toggle Button -->
+                        
+
                         <button id="themeToggle" class="btn btn-link nav-link me-3 p-0 border-0 text-decoration-none">
                               <i id="themeIcon" class="bi bi-moon-stars-fill fs-5"></i>
                         </button>
                         {% if user.is_authenticated %}
+                        {% if user.is_authenticated and not user.is_approved_seller and not user.is_superuser %}
                         <a class="nav-link" href="{% url 'cart' %}"><i class="fas fa-shopping-cart"></i></a>
+                        {% endif %}
                         <a class="navbar-brand fw-bold mx-4 " href="{% url 'user_dashboard' %}"> Hi, {{ user.username }}
                               !</a>
                         <form action="{% url 'logout' %}" method="post" class="px-2">
