@@ -4,7 +4,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy, reverse
 from django.contrib import messages
 from .models import Product, Order, OrderItems, OrderItemTracking
-from users.models import *
+from commerce.models import WishList, Cart
 
 class ProductListView(ListView):
       model = Product
@@ -49,11 +49,11 @@ class ProductDetailView(DetailView):
       model = Product
       template_name = 'product_details.html'
       context_object_name = "product"
-      
+
       def get_context_data(self, **kwargs):
             context = super().get_context_data(**kwargs)
             if self.request.user.is_authenticated:
-                  from users.models import WishList
+                  
                   wishlist_products = WishList.objects.filter(
                         user=self.request.user
                   ).values_list(
