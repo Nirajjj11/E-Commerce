@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     
     "product",          # for product app
     "accounts",         # for accounts app
+    "users",            # for users app
 
 ]
 
