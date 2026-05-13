@@ -1,43 +1,33 @@
 {% load static %}
-<nav class="navbar navbar-expand-lg border-bottom shadow-sm bg-success">
+<nav class="navbar navbar-expand-lg border-bottom shadow-sm custom-navbar navbar-dark py-3">
       <div class="container-fluid">
             <div class="collapse navbar-collapse" id="navbarNav">
                   <ul class="navbar-nav me-auto">
                         {% if user.is_authenticated %}
-
                         {% if user.is_approved_seller %}
-
-                        <li class="nav-item">
-                              <span class="nav-link text-info fw-bold">
-                                    <i class="bi bi-patch-check-fill"></i>
-                                    Verified Seller
-                              </span>
-                        </li>
-
-                        <li class="nav-item">
-                              <a class="nav-link text-warning fw-bold" href="{% url 'product_create' %}">
-                                    <i class="bi bi-plus-circle-fill"></i>
+                        <div class="d-flex align-items-center gap-3 flex-wrap">
+                              <!-- VERIFIED SELLER BADGE -->
+                              <div class="bg-light rounded-pill px-4 py-2 shadow-sm d-flex align-items-center">
+                                    <i class="bi bi-patch-check-fill text-success me-2 fs-5"></i><span class="fw-bold text-dark">Verified Seller </span>
+                              </div>
+                              <!-- ADD PRODUCT -->
+                              <a href="{% url 'product_create' %}"
+                                    class="btn btn-warning fw-bold rounded-pill px-4 shadow-sm">
+                                    <i class="bi bi-plus-circle-fill me-1"></i>
                                     Add Product
                               </a>
-                        </li>
-
-                        <li class="nav-item">
-                              <a class="nav-link text-white" href="{% url 'my_product' %}">
+                              <!-- MY PRODUCTS -->
+                              <a href="{% url 'my_product' %}" class="btn btn-light rounded-pill px-4 shadow-sm">
+                                    <i class="bi bi-box-seam me-1"></i>
                                     My Product
                               </a>
-                        </li>
-
+                        </div>
                         {% elif user.category == "SELLER" %}
-
-                        <li class="nav-item">
-                              <span class="nav-link text-warning small mt-1">
-                                    <i class="bi bi-hourglass-split"></i>
-                                    Waiting for Admin Approval
-                              </span>
-                        </li>
-
+                        <div class="bg-warning-subtle text-dark rounded-pill px-4 py-2 small shadow-sm d-inline-flex align-items-center">
+                              <i class="bi bi-hourglass-split me-2"></i>
+                              Waiting for Admin Approval
+                        </div>
                         {% endif %}
-
                         {% endif %}
                   </ul>
             </div>
