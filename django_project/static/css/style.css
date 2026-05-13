@@ -30,3 +30,65 @@
   border-color: #13365a;
   box-shadow: 0 0 0 0.25rem rgba(33, 37, 41, 0.1);
 }
+/* Cart Button */
+.cart-btn{
+    background: linear-gradient(135deg,#ff9f00,#ff6a00);
+    color:white;
+    border:none;
+    border-radius:16px;
+    transition:0.3s;
+    box-shadow:0 8px 20px rgba(255,106,0,0.25);
+}
+
+.cart-btn:hover{
+    transform:translateY(-3px);
+    color:white;
+    box-shadow:0 12px 24px rgba(255,106,0,0.35);
+}
+
+/* Buy Button */
+.buy-btn{
+    background: linear-gradient(135deg,#2874f0,#0056d6);
+    color:white;
+    border:none;
+    border-radius:16px;
+    transition:0.3s;
+    box-shadow:0 8px 20px rgba(0,86,214,0.25);
+}
+
+.buy-btn:hover{
+    transform:translateY(-3px);
+    color:white;
+    box-shadow:0 12px 24px rgba(0,86,214,0.35);
+}
+
+/* Wishlist Heart */
+.wishlist-btn{
+    width:65px;
+    height:65px;
+    border-radius:50%;
+    background:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-decoration:none;
+    font-size:30px;
+    border:2px solid #eee;
+    transition:0.3s;
+    box-shadow:0 6px 18px rgba(0,0,0,0.08);
+}
+
+.wishlist-btn:hover{
+    transform:scale(1.08);
+    background:#fff5f5;
+    border-color:#ff4d6d;
+}
+
+.wishlist-btn i{
+    transition:0.3s;
+}
+
+.wishlist-btn:hover i{
+    transform:scale(1.15);
+}
+

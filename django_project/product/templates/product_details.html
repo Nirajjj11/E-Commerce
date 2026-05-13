@@ -5,8 +5,8 @@
       <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                   <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
-                  <li class="breadcrumb-item active">{{ product.get_category_display }}</li>
-                  <li class="breadcrumb-item active" aria-current="page">{{ product.get_sub_category_display }}</li>
+                  <li class="breadcrumb-item active"><a href="{% url 'home' %}?category={{ product.category }}">{{ product.get_category_display }}</a></li>
+                  <li class="breadcrumb-item active" aria-current="page"><a href="{% url 'home' %}?sub_category={{ product.sub_category }}">{{ product.get_sub_category_display }}</a></li>
                   {% if user == product.seller and user.is_approved_seller %}
                   <a href="{% url 'product_update' product.pk %}" class="btn mx-2 ms-auto btn-warning">Edit</a>
                   <a href="{% url 'product_delete' product.pk %}" class="btn btn-danger ">Delete</a>
@@ -38,7 +38,8 @@
                   <div class="price-section mb-4 p-3 bg-light rounded">
                         <div class="d-flex align-items-center">
                               <span class="h2 fw-bold text-danger mb-0">₹{{ product.actual_price }}</span>
-                              <span class="text-muted text-decoration-line-through ms-3">M.R.P: ₹{{ product.marked_price }}</span>
+                              <span class="text-muted text-decoration-line-through ms-3">
+                                    M.R.P: ₹{{ product.marked_price}}</span>
                               <span class="badge bg-success ms-3">{{ product.discounts }}% OFF</span>
                         </div>
                         <small class="text-muted">Inclusive of all taxes</small>
@@ -53,9 +54,13 @@
 
                   <div class="stock-status mb-4">
                         {% if product.stocks > 10 %}
-                        <span class="text-success fw-bold"><i class="bi bi-check-circle"></i> In Stock ({{ product.stocks }} units left)</span>
+                        <span class="text-success fw-bold">
+                              <i class="bi bi-check-circle"></i> 
+                              In Stock ({{ product.stocks }} units left)</span>
                         {% elif product.stocks > 0 %}
-                        <span class="text-warning fw-bold"><i class="bi bi-exclamation-triangle"></i> Only {{ product.stocks }} left - Order Soon!</span>
+                        <span class="text-warning fw-bold">
+                              <i class="bi bi-exclamation-triangle"></i> 
+                              Only {{ product.stocks }} left - Order Soon!</span>
                         {% else %}
                         <span class="text-danger fw-bold"><i class="bi bi-x-circle"></i> Out of Stock</span>
                         {% endif %}
@@ -63,17 +68,30 @@
 
                   <!-- Action Buttons -->
                   {% if not request.user.is_approved_seller and not request.user.is_superuser %}
-                  <a href="{% url 'add_to_cart' product.pk %}"
-                        class="btn btn-primary btn-lg px-5 py-3 me-md-2 shadow-sm {% if product.stocks == 0 %}disabled{% endif %}">
-                        Add to Cart
-                  </a>
 
-                  <a href="{% url 'add_to_wishlist' product.pk %}"
-                        class="btn btn-outline-secondary btn-lg px-4 shadow-sm">
-                        <i class="bi bi-heart"></i> Wishlist
-                  </a>
+                  <div class="d-flex align-items-center gap-3 mt-4 flex-wrap">
+                        <!-- Add To Cart -->
+                        <a href="{% url 'add_to_cart' product.pk %}"
+                              class="btn cart-btn btn-lg px-5 py-3 fw-bold {% if product.stocks == 0 %}disabled{% endif %}">
+
+                              <i class="bi bi-cart3 me-2"></i>
+
+                              {% if product.stocks == 0 %}
+                              Out of Stock
+                              {% else %}
+                              Add to Cart
+                              {% endif %}
+                        </a>
+                        <!-- Wishlist -->
+                        <a href="{% url 'add_to_wishlist' product.pk %}" class="wishlist-btn">
+                              {% if product.id in wishlist_products %}
+                              <i class="bi bi-heart-fill text-danger"></i>
+                              {% else %}
+                              <i class="bi bi-heart text-dark"></i>
+                              {% endif %}
+                        </a>
+                  </div>
                   {% endif %}
-
                   <hr class="my-5">
 
                   <!-- Small Policy Icons

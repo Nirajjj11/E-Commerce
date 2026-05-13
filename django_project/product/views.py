@@ -11,33 +11,26 @@ class ProductListView(ListView):
       context_object_name = "products"
 
       def get_queryset(self):
-
             queryset = Product.objects.all().order_by('-created_at')
-
-            # Search Query
-            query = self.request.GET.get("q")
-
-            # Category Query
-            category = self.request.GET.get("category")
-
+            query = self.request.GET.get("q")                                 # Search Query
+            category = self.request.GET.get("category")                       # Category Query
+            sub_category = self.request.GET.get("sub_category")
             # Apply Search
             if query:
                   queryset = queryset.filter(name__icontains=query)
-
             # Apply Category Filter
             if category:
                   queryset = queryset.filter(category=category)
+            
+            if sub_category:
+                  queryset = queryset.filter(sub_category = sub_category)
 
             return queryset
 
       def get_context_data(self, **kwargs):
-
             context = super().get_context_data(**kwargs)
-
             context["all_categories"] = Product.CATEGORY_CHOICES
-
             context["selected_category"] = self.request.GET.get("category")
-
             context["search_query"] = self.request.GET.get("q", "")
 
             return context

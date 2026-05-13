@@ -28,6 +28,9 @@ My Dashboard — OnlineBazar
                               <a class="nav-link text-dark" href="#">
                                     <i class="fas fa-box me-2 text-primary"></i>My Orders
                               </a>
+                              <a class="nav-link text-dark" href="{% url 'wishlist' %}">
+                                    <i class="bi bi-heart-fill text-danger me-2"></i>Wishlist
+                              </a>
                               <a class="nav-link text-dark" href="{% url 'cart' %}">
                                     <i class="fas fa-shopping-cart me-2 text-primary"></i> Cart
                               </a>
@@ -85,7 +88,7 @@ My Dashboard — OnlineBazar
 
                                     </div>
 
-                                    <a href="/order/track/{{ order.order_id }}/"
+                                    <a href="#"
                                           class="btn btn-sm btn-outline-primary">
 
                                           <i class="fas fa-map-marker-alt me-1"></i>
