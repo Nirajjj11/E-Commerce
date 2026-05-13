@@ -3,7 +3,6 @@
 {% block content %}
 <div class="container mt-4">
       <h3 class="fw-bold mb-4"><i class="fas fa-lock text-primary me-2"></i>Secure Checkout</h3>
-
       {% if is_member %}
       <div class="alert border-0 shadow-sm mb-3 d-flex align-items-center gap-3"
             style="background:linear-gradient(135deg,#fff8e1,#fffde7);border-left:4px solid #FB641B !important;">
@@ -35,9 +34,8 @@
                         <div class="card-body">
                               <p class="mb-0 fw-semibold">{{ user.name }}</p>
                               <p class="text-muted mb-0">{{ user.get_full_address }}</p>
-                              <p class="text-muted mb-0">📞 {{ user.phone_number }}</p>
-                              <a href="/user/profile/edit/" class="btn btn-sm btn-outline-primary mt-2">Change
-                                    Address</a>
+                              <p class="text-muted mb-0">📞 {{ user.mobile_no }}</p>
+                              <a href="/user/profile/edit/" class="btn btn-sm btn-outline-primary mt-2">Change Address</a>
                         </div>
                   </div>
 
@@ -104,8 +102,8 @@
                         <div class="card-body p-2">
                               {% for item in items %}
                               <div class="d-flex align-items-center gap-2 border-bottom py-2">
-                                    {% if item.product.product_image %}
-                                    <img src="{{ item.product.product_image.url }}"
+                                    {% if item.product.image %}
+                                    <img src="{{ item.product.image.url }}"
                                           style="width:50px;height:50px;object-fit:cover;" class="rounded" />
                                     {% else %}
                                     <div class="bg-light rounded d-flex align-items-center justify-content-center"
@@ -114,12 +112,10 @@
                                     </div>
                                     {% endif %}
                                     <div class="flex-grow-1">
-                                          <p class="mb-0 small fw-semibold text-truncate">{{ item.product.product_name
-                                                }}</p>
-                                          <p class="mb-0 small text-muted">Qty: {{ item.quantity }} × ₹{{
-                                                item.product.price }}</p>
+                                          <p class="mb-0 small fw-semibold text-truncate">{{ item.product.name}}</p>
+                                          <p class="mb-0 small text-muted">Qty: {{ item.quantity }} × ₹{{ item.product.actual_price }}</p>
                                     </div>
-                                    <strong class="text-primary">₹{{ item.product.price }}</strong>
+                                    <strong class="text-primary">₹{{ item.product.actual_price }}</strong>
                               </div>
                               {% endfor %}
                         </div>
