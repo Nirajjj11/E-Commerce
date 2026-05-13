@@ -7,133 +7,56 @@ My Dashboard — OnlineBazar
 {% block content %}
 
 <div class="container mt-4">
-
       <div class="row g-4">
-
             <!-- Sidebar -->
             <div class="col-md-3">
-
                   <div class="card shadow text-center p-3">
-
                         <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center mx-auto mb-2"
-                              style="width:70px;height:70px;font-size:2rem;">
-
-                              {{ request.user.username|first|upper }}
-
+                              style="width:70px;height:70px;font-size:2rem;"> {{ request.user.username|first|upper }}
                         </div>
-
-                        <h5 class="fw-bold mb-0">
-                              {{ request.user.username }}
-                        </h5>
-
-                        <small class="text-muted">
-                              {{ request.user.email }}
-                        </small>
+                        <h5 class="fw-bold mb-0"> {{ request.user.username }}</h5>
+                        <small class="text-muted"> {{ request.user.email }} </small>
 
                         {% if request.session.is_prime %}
-                        <div class="mt-2">
-                              <span class="badge px-3 py-1"
-                                    style="background:#FB641B;">
-
-                                    ⭐ Bazar Prime
-
-                              </span>
-                        </div>
+                        <div class="mt-2"> <span class="badge px-3 py-1" style="background:#FB641B;"> ⭐ Bazar Prime </span> </div>
                         {% endif %}
-
                         <hr />
-
                         <nav class="nav flex-column gap-1 text-start">
-
-                              <a class="nav-link text-dark"
-                                    href="{% url 'user_dashboard' %}">
-
-                                    <i class="fas fa-tachometer-alt me-2 text-primary"></i>
-                                    Dashboard
-
+                              <a class="nav-link text-dark" href="{% url 'user_dashboard' %}">
+                                    <i class="fas fa-tachometer-alt me-2 text-primary"></i> Dashboard
                               </a>
-
-                              <a class="nav-link text-dark"
-                                    href="#">
-
-                                    <i class="fas fa-box me-2 text-primary"></i>
-                                    My Orders
-
+                              <a class="nav-link text-dark" href="#">
+                                    <i class="fas fa-box me-2 text-primary"></i>My Orders
                               </a>
-
-                              <a class="nav-link text-dark"
-                                    href="{% url 'cart' %}">
-
-                                    <i class="fas fa-shopping-cart me-2 text-primary"></i>
-                                    Cart
-
+                              <a class="nav-link text-dark" href="{% url 'cart' %}">
+                                    <i class="fas fa-shopping-cart me-2 text-primary"></i> Cart
                               </a>
-
-                              <a class="nav-link text-dark"
-                                    href="{% url 'checkout' %}">
-
-                                    <i class="fas fa-credit-card me-2 text-success"></i>
-                                    Checkout
-
+                              <a class="nav-link text-dark" href="{% url 'checkout' %}">
+                                    <i class="fas fa-credit-card me-2 text-success"></i> Checkout
                               </a>
-
-                              <a class="nav-link text-dark"
-                                    href="#">
-
-                                    <i class="fas fa-star me-2 text-warning"></i>
-                                    Bazar Prime
-
+                              <a class="nav-link text-dark" href="#">
+                                    <i class="fas fa-star me-2 text-warning"></i> Bazar Prime 
                               </a>
-
-                              <a class="nav-link text-dark"
-                                    href="{% url 'profile_edit' %}">
-
-                                    <i class="fas fa-edit me-2 text-primary"></i>
-                                    Edit Profile
-
+                              <a class="nav-link text-dark" href="{% url 'profile_edit' %}">
+                                    <i class="fas fa-edit me-2 text-primary"></i>Edit Profile
                               </a>
-
-                              <a class="nav-link text-dark"
-                                    href="{% url 'change_password' %}">
-
-                                    <i class="fas fa-key me-2 text-primary"></i>
-                                    Change Password
-
+                              <a class="nav-link text-dark" href="{% url 'change_password' %}">
+                                    <i class="fas fa-key me-2 text-primary"></i>Change Password
                               </a>
-
                               <hr />
-
-                              <a class="nav-link text-danger"
-                                    href="{% url 'logout' %}">
-
-                                    <i class="fas fa-sign-out-alt me-2"></i>
-                                    Logout
-
+                              <a class="nav-link text-danger" href="{% url 'logout' %}">
+                                    <i class="fas fa-sign-out-alt me-2"></i> Logout
                               </a>
-
                         </nav>
-
                   </div>
-
             </div>
-
             <!-- Main Content -->
             <div class="col-md-9">
-
-                  <h4 class="fw-bold mb-3">
-
-                        Welcome back,
-                        {{ request.user.username }}! 👋
-
-                  </h4>
-
+                  <h4 class="fw-bold mb-3"> Welcome back, {{ request.user.username }}!</h4>
                   <!-- Active Orders -->
                   {% if active_orders %}
-
                   <div class="card shadow mb-4 border-warning">
-
                         <div class="card-header bg-warning text-dark fw-bold">
-
                               <i class="fas fa-truck me-2"></i>
                               Active Orders ({{ active_orders.count }})
 

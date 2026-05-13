@@ -53,11 +53,9 @@
 
                   <div class="stock-status mb-4">
                         {% if product.stocks > 10 %}
-                        <span class="text-success fw-bold"><i class="bi bi-check-circle"></i> In Stock ({{
-                              product.stocks }} units left)</span>
+                        <span class="text-success fw-bold"><i class="bi bi-check-circle"></i> In Stock ({{ product.stocks }} units left)</span>
                         {% elif product.stocks > 0 %}
-                        <span class="text-warning fw-bold"><i class="bi bi-exclamation-triangle"></i> Only {{
-                              product.stocks }} left - Order Soon!</span>
+                        <span class="text-warning fw-bold"><i class="bi bi-exclamation-triangle"></i> Only {{ product.stocks }} left - Order Soon!</span>
                         {% else %}
                         <span class="text-danger fw-bold"><i class="bi bi-x-circle"></i> Out of Stock</span>
                         {% endif %}
