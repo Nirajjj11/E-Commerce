@@ -50,7 +50,7 @@ My Cart
                                           <p class="text-muted small"> {{ item.product.description|truncatewords:18 }}</p>
                                           <!-- Price -->
                                           <div class="mb-3">
-                                                <span class="fw-bold fs-4 text-dark"> ₹{{ item.product.actual_price }} </span>
+                                                <span class="fw-bold fs-4 text-danger"> ₹{{ item.product.actual_price }} </span>
                                                 <span class="text-muted text-decoration-line-through ms-2"> ₹{{ item.product.marked_price }}</span>
                                                 <span class="badge bg-success ms-2">{{ item.product.discounts }}% OFF </span>
                                           </div>
