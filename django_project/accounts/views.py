@@ -57,3 +57,6 @@ class ProfileDeleteView(LoginRequiredMixin, DeleteView):
 
       def get_object(self):
             return self.request.user
+class PasswordChange(LoginRequiredMixin, UpdateView):
+      model = CustomUser
+      template_name = "password_change.html"

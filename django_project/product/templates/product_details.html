@@ -38,7 +38,8 @@
                   <div class="price-section mb-4 p-3 bg-light rounded">
                         <div class="d-flex align-items-center">
                               <span class="h2 fw-bold text-danger mb-0">₹{{ product.actual_price }}</span>
-                              <span class="text-muted text-decoration-line-through ms-3">M.R.P: ₹{{ product.marked_price }}</span>
+                              <span class="text-muted text-decoration-line-through ms-3">M.R.P: ₹{{ product.marked_price
+                                    }}</span>
                               <span class="badge bg-success ms-3">{{ product.discounts }}% OFF</span>
                         </div>
                         <small class="text-muted">Inclusive of all taxes</small>
@@ -53,9 +54,11 @@
 
                   <div class="stock-status mb-4">
                         {% if product.stocks > 10 %}
-                        <span class="text-success fw-bold"><i class="bi bi-check-circle"></i> In Stock ({{ product.stocks }} units left)</span>
+                        <span class="text-success fw-bold"><i class="bi bi-check-circle"></i> In Stock ({{
+                              product.stocks }} units left)</span>
                         {% elif product.stocks > 0 %}
-                        <span class="text-warning fw-bold"><i class="bi bi-exclamation-triangle"></i> Only {{ product.stocks }} left - Order Soon!</span>
+                        <span class="text-warning fw-bold"><i class="bi bi-exclamation-triangle"></i> Only {{
+                              product.stocks }} left - Order Soon!</span>
                         {% else %}
                         <span class="text-danger fw-bold"><i class="bi bi-x-circle"></i> Out of Stock</span>
                         {% endif %}
@@ -63,14 +66,15 @@
 
                   <!-- Action Buttons -->
                   {% if not request.user.is_approved_seller and not request.user.is_superuser %}
-                  <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-                        <button type="button" class="btn btn-primary btn-lg px-5 py-3 me-md-2 shadow-sm" {% if product.stocks == 0 %} disabled {% endif %}>
-                              Add to Cart
-                        </button>
-                        <button type="button" class="btn btn-outline-secondary btn-lg px-4 shadow-sm">
-                              <i class="bi bi-heart"></i> Wishlist
-                        </button>
-                  </div>
+                  <a href="{% url 'add_to_cart' product.pk %}"
+                        class="btn btn-primary btn-lg px-5 py-3 me-md-2 shadow-sm {% if product.stocks == 0 %}disabled{% endif %}">
+                        Add to Cart
+                  </a>
+
+                  <a href="{% url 'add_to_wishlist' product.pk %}"
+                        class="btn btn-outline-secondary btn-lg px-4 shadow-sm">
+                        <i class="bi bi-heart"></i> Wishlist
+                  </a>
                   {% endif %}
 
                   <hr class="my-5">
