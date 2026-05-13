@@ -1,0 +1,186 @@
+<div class="col-md-3">
+
+      <div class="card shadow text-center p-3">
+
+            <!-- USER ICON -->
+            <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center mx-auto mb-2"
+                  style="width:70px;height:70px;font-size:2rem;">
+
+                  {{ request.user.username|first|upper }}
+
+            </div>
+
+            <!-- USERNAME -->
+            <h5 class="fw-bold mb-0">
+                  {{ request.user.username }}
+            </h5>
+
+            <!-- EMAIL -->
+            <small class="text-muted">
+                  {{ request.user.email }}
+            </small>
+
+            <!-- ROLE BADGE -->
+            {% if request.user.is_superuser %}
+
+            <div class="mt-2">
+                  <span class="badge bg-danger px-3 py-2">
+                        SUPER ADMIN
+                  </span>
+            </div>
+
+            {% elif request.user.is_approved_seller %}
+
+            <div class="mt-2">
+                  <span class="badge bg-success px-3 py-2">
+                        VERIFIED SELLER
+                  </span>
+            </div>
+
+            {% elif request.session.is_prime %}
+
+            <div class="mt-2">
+                  <span class="badge px-3 py-1" style="background:#FB641B;">
+                        ⭐ Bazar Prime
+                  </span>
+            </div>
+
+            {% endif %}
+
+            <hr />
+
+            <!-- SIDEBAR NAVIGATION -->
+            <nav class="nav flex-column gap-1 text-start">
+
+                  <!-- COMMON -->
+                  <a class="nav-link text-dark dashboard-link" href="{% url 'user_dashboard' %}">
+
+                        <i class="fas fa-tachometer-alt me-2 text-primary"></i>
+                        Dashboard
+
+                  </a>
+
+                  {% if request.user.is_superuser %}
+
+                  <!-- SUPER ADMIN LINKS -->
+
+                  <a class="nav-link text-dark dashboard-link" href="#">
+                        <i class="fas fa-users me-2 text-primary"></i>
+                        Manage Users
+                  </a>
+
+                  <a class="nav-link text-dark dashboard-link" href="#">
+                        <i class="fas fa-boxes me-2 text-success"></i>
+                        All Products
+                  </a>
+
+                  <a class="nav-link text-dark dashboard-link" href="#">
+                        <i class="fas fa-shopping-bag me-2 text-warning"></i>
+                        All Orders
+                  </a>
+
+                  <a class="nav-link text-dark dashboard-link" href="#">
+                        <i class="fas fa-chart-line me-2 text-danger"></i>
+                        Site Analytics
+                  </a>
+
+                  {% elif request.user.is_approved_seller %}
+
+                  <!-- SELLER LINKS -->
+
+                  <a class="nav-link text-dark dashboard-link" href="{% url 'my_product' %}">
+
+                        <i class="fas fa-box me-2 text-primary"></i>
+                        My Products
+
+                  </a>
+
+                  <a class="nav-link text-dark dashboard-link" href="{% url 'product_create' %}">
+
+                        <i class="fas fa-plus-circle me-2 text-success"></i>
+                        Add Product
+
+                  </a>
+
+                  <a class="nav-link text-dark dashboard-link" href="#">
+                        <i class="fas fa-truck me-2 text-warning"></i>
+                        Seller Orders
+                  </a>
+
+                  <a class="nav-link text-dark dashboard-link" href="#">
+                        <i class="fas fa-chart-bar me-2 text-danger"></i>
+                        Sales Analytics
+                  </a>
+
+                  {% else %}
+
+                  <!-- NORMAL USER LINKS -->
+
+                  <a class="nav-link text-dark dashboard-link" href="#">
+                        <i class="fas fa-box me-2 text-primary"></i>
+                        My Orders
+                  </a>
+
+                  <a class="nav-link text-dark dashboard-link" href="{% url 'wishlist' %}">
+
+                        <i class="bi bi-heart-fill text-danger me-2"></i>
+                        Wishlist
+
+                  </a>
+
+                  <a class="nav-link text-dark dashboard-link" href="{% url 'cart' %}">
+
+                        <i class="fas fa-shopping-cart me-2 text-primary"></i>
+                        Cart
+
+                  </a>
+
+                  <a class="nav-link text-dark dashboard-link" href="{% url 'checkout' %}">
+
+                        <i class="fas fa-credit-card me-2 text-success"></i>
+                        Checkout
+
+                  </a>
+
+                  <a class="nav-link text-dark dashboard-link" href="#">
+                        <i class="fas fa-star me-2 text-warning"></i>
+                        Bazar Prime
+                  </a>
+
+                  {% endif %}
+
+                  <!-- COMMON LINKS -->
+
+                  <a class="nav-link text-dark dashboard-link" href="{% url 'profile_edit' %}">
+
+                        <i class="fas fa-edit me-2 text-info"></i>
+                        Edit Profile
+
+                  </a>
+
+                  <a class="nav-link text-dark dashboard-link" href="{% url 'change_password' %}">
+
+                        <i class="fas fa-key me-2 text-secondary"></i>
+                        Change Password
+
+                  </a>
+
+                  <hr />
+
+                  <form action="{% url 'logout' %}" method="post">
+                        {% csrf_token %}
+
+                        <button type="submit" class="btn btn-danger btn-sm w-100">
+
+                              <i class="fas fa-sign-out-alt me-2"></i>
+                              Logout
+
+                        </button>
+
+                  </form>
+
+            </nav>
+
+      </div>
+
+</div>

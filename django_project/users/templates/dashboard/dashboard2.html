@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Dashboard — OnlineBazar
+{% endblock %}
+
+{% block content %}
+
+{% if request.user.is_superuser %}
+
+      {% include 'dashboard/admin_dashboard.html' %}
+
+{% elif request.user.is_approved_seller %}
+
+      {% include 'dashboard/seller_dashboard.html' %}
+
+{% else %}
+
+      {% include 'dashboard/user_dashboard.html' %}
+
+{% endif %}
+
+{% endblock %}

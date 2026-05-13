@@ -1,0 +1,112 @@
+<div class="container mt-4">
+
+      <div class="row g-4">
+
+            {% include 'dashboard/sidebar.html' %}
+
+            <div class="col-md-9">
+
+                  <h4 class="fw-bold mb-3">
+                        Welcome back, {{ request.user.username }}!
+                  </h4>
+
+                  <!-- ACTIVE ORDERS -->
+                  {% if active_orders %}
+
+                  <div class="card shadow mb-4 border-warning">
+
+                        <div class="card-header bg-warning text-dark fw-bold">
+
+                              {% if request.user.is_superuser %}
+
+                              <i class="fas fa-layer-group me-2"></i>
+                              Platform Activity
+
+                              {% elif request.user.is_approved_seller %}
+
+                              <i class="fas fa-truck me-2"></i>
+                              Active Seller Orders ({{ active_orders.count }})
+
+                              {% else %}
+
+                              <i class="fas fa-truck me-2"></i>
+                              Active Orders ({{ active_orders.count }})
+
+                              {% endif %}
+
+                        </div>
+
+                        <div class="card-body p-2">
+
+                              {% for order in active_orders %}
+
+                              <div
+                                    class="d-flex align-items-center justify-content-between border-bottom py-2 px-2">
+
+                                    <div>
+
+                                          <strong>
+                                                #{{ order.id }}
+                                          </strong>
+
+                                          <span class="badge bg-info ms-2">
+                                                Active
+                                          </span>
+
+                                    </div>
+
+                                    <a href="#"
+                                          class="btn btn-sm btn-outline-primary">
+
+                                          <i class="fas fa-map-marker-alt me-1"></i>
+                                          Track
+
+                                    </a>
+
+                              </div>
+
+                              {% endfor %}
+
+                        </div>
+
+                  </div>
+
+                  {% endif %}
+                  <!-- USER STATS -->
+                  <div class="row g-3 mb-4">
+
+                        <div class="col-md-3">
+                              <div class="card p-3 text-center shadow-sm">
+                                    <h3>{{ orders|length }}</h3>
+                                    <small>Total Orders</small>
+                              </div>
+                        </div>
+
+                        <div class="col-md-3">
+                              <div class="card p-3 text-center shadow-sm">
+                                    <h3>₹{{ total_spent }}</h3>
+                                    <small>Total Spent</small>
+                              </div>
+                        </div>
+
+                        <div class="col-md-3">
+                              <div class="card p-3 text-center shadow-sm">
+                                    <h3>{{ wishlist|length }}</h3>
+                                    <small>Wishlist</small>
+                              </div>
+                        </div>
+
+                        <div class="col-md-3">
+                              <div class="card p-3 text-center shadow-sm">
+                                    <h3>{{ reviews|length }}</h3>
+                                    <small>Reviews</small>
+                              </div>
+                        </div>
+
+                  </div>
+
+            </div>
+
+      </div>
+
+</div>
