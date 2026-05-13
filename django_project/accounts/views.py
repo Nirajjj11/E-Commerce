@@ -1,7 +1,13 @@
 from django.urls import reverse_lazy
 from django.views.generic import CreateView ,UpdateView,DeleteView
 from .forms import CustomUserCreationForm, SellerSignUpForm
-
+from django.contrib.auth.views import PasswordChangeView
+from django.contrib.messages.views import SuccessMessageMixin
+from .forms import (
+      CustomUserCreationForm,
+      SellerSignUpForm,
+      CustomPasswordChangeForm
+)
 from django.views.generic import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import CustomUser 
@@ -57,6 +63,14 @@ class ProfileDeleteView(LoginRequiredMixin, DeleteView):
 
       def get_object(self):
             return self.request.user
-class PasswordChange(LoginRequiredMixin, UpdateView):
-      model = CustomUser
+      
+class PasswordChange(
+            LoginRequiredMixin,
+            SuccessMessageMixin,
+            PasswordChangeView
+      ):
+
       template_name = "password_change.html"
+      form_class = CustomPasswordChangeForm
+      success_url = reverse_lazy("user_dashboard")
+      success_message = "Password changed successfully"
