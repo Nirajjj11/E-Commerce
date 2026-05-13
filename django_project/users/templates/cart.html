@@ -7,37 +7,20 @@ My Cart
 {% block content %}
 
 <div class="container py-5">
-
       <!-- Header -->
       <div class="d-flex justify-content-between align-items-center mb-4">
-
-            <h2 class="fw-bold mb-0">
-                  <i class="bi bi-cart-fill text-primary"></i>
-                  My Cart
-            </h2>
-
-            <span class="badge bg-dark fs-6">
-                  {{ items|length }} Items
-            </span>
-
+            <h2 class="fw-bold mb-0"><i class="bi bi-cart-fill text-primary"></i>My Cart</h2>
+            <span class="badge bg-dark fs-6"> {{ items|length }} Items </span>
       </div>
-
       {% if items %}
-
       <div class="row g-4">
-
             <!-- Cart Items -->
             <div class="col-lg-8">
-
                   {% for item in items %}
-
                   <div class="card border-0 shadow-sm mb-4">
-
                         <div class="row g-0 align-items-center">
-
                               <!-- Product Image -->
                               <div class="col-md-3">
-
                                     {% if item.product.image %}
                                     <img src="{{ item.product.image.url }}"
                                           class="img-fluid rounded-start"
@@ -49,141 +32,63 @@ My Cart
                                           style="height:220px;width:100%;object-fit:cover;"
                                           alt="No Image">
                                     {% endif %}
-
                               </div>
-
                               <!-- Product Info -->
                               <div class="col-md-9">
-
                                     <div class="card-body h-100 d-flex flex-column">
-
                                           <div class="d-flex justify-content-between">
-
                                                 <div>
-
-                                                      <h4 class="fw-bold mb-1">
-                                                            {{ item.product.name }}
-                                                      </h4>
-
-                                                      <span class="badge bg-primary mb-2">
-                                                            {{ item.product.get_category_display }}
-                                                      </span>
-
+                                                      <h4 class="fw-bold mb-1"> {{ item.product.name }} </h4>
+                                                      <span class="badge bg-primary mb-2"> {{ item.product.get_category_display }} </span>
                                                 </div>
-
                                                 <!-- Remove -->
-                                                <form method="POST"
-                                                      action="{% url 'remove_from_cart' item.pk %}">
+                                                <form method="POST" action="{% url 'remove_from_cart' item.pk %}">
                                                       {% csrf_token %}
-
-                                                      <button class="btn btn-outline-danger btn-sm">
-                                                            <i class="bi bi-trash"></i>
-                                                      </button>
+                                                      <button class="btn btn-outline-danger btn-sm"> <i class="bi bi-trash"></i> </button>
                                                 </form>
-
                                           </div>
-
-                                          <p class="text-muted small">
-                                                {{ item.product.description|truncatewords:18 }}
-                                          </p>
-
+                                          <p class="text-muted small"> {{ item.product.description|truncatewords:18 }}</p>
                                           <!-- Price -->
                                           <div class="mb-3">
-
-                                                <span class="fw-bold fs-4 text-dark">
-                                                      ₹{{ item.product.actual_price }}
-                                                </span>
-
-                                                <span class="text-muted text-decoration-line-through ms-2">
-                                                      ₹{{ item.product.marked_price }}
-                                                </span>
-
-                                                <span class="badge bg-success ms-2">
-                                                      {{ item.product.discounts }}% OFF
-                                                </span>
-
+                                                <span class="fw-bold fs-4 text-dark"> ₹{{ item.product.actual_price }} </span>
+                                                <span class="text-muted text-decoration-line-through ms-2"> ₹{{ item.product.marked_price }}</span>
+                                                <span class="badge bg-success ms-2">{{ item.product.discounts }}% OFF </span>
                                           </div>
-
                                           <!-- Quantity -->
                                           <div class="d-flex align-items-center gap-2 mt-auto">
-
-                                                <form method="POST"
-                                                      action="{% url 'decrease_cart_quantity' item.pk %}">
+                                                <form method="POST" action="{% url 'decrease_cart_quantity' item.pk %}">
                                                       {% csrf_token %}
-
-                                                      <button class="btn btn-outline-secondary">
-                                                            -
-                                                      </button>
-
+                                                      <button class="btn btn-outline-secondary">-</button>
                                                 </form>
-
-                                                <span class="fw-bold fs-5 px-2">
-                                                      {{ item.quantity }}
-                                                </span>
-
-                                                <form method="POST"
-                                                      action="{% url 'increase_cart_quantity' item.pk %}">
+                                                <span class="fw-bold fs-5 px-2"> {{ item.quantity }} </span>
+                                                <form method="POST" action="{% url 'increase_cart_quantity' item.pk %}">
                                                       {% csrf_token %}
-
-                                                      <button class="btn btn-outline-secondary">
-                                                            +
-                                                      </button>
-
+                                                      <button class="btn btn-outline-secondary">+ </button>
                                                 </form>
-
                                           </div>
-
                                     </div>
-
                               </div>
-
                         </div>
-
                   </div>
-
                   {% endfor %}
-
             </div>
-
             <!-- Summary -->
             <div class="col-lg-4">
-
                   <div class="card border-0 shadow-sm">
-
                         <div class="card-body p-4">
-
-                              <h4 class="fw-bold mb-4">
-                                    Order Summary
-                              </h4>
-
-                              <div class="d-flex justify-content-between mb-3">
-                                    <span>Subtotal</span>
-                                    <strong>₹{{ subtotal }}</strong>
-                              </div>
-
+                              <h4 class="fw-bold mb-4"> Order Summary </h4>
+                              <div class="d-flex justify-content-between mb-3"><span>Subtotal</span><strong>₹{{ subtotal }}</strong></div>
                               {% if disc_amount > 0 %}
-
                               <div class="d-flex justify-content-between mb-3 text-success">
                                     <span>Discount</span>
                                     <strong>- ₹{{ disc_amount }}</strong>
                               </div>
-
                               {% endif %}
-
                               <hr>
-
                               <div class="d-flex justify-content-between mb-4">
-
-                                    <h5 class="fw-bold">
-                                          Total
-                                    </h5>
-
-                                    <h5 class="fw-bold text-primary">
-                                          ₹{{ total }}
-                                    </h5>
-
+                                    <h5 class="fw-bold"> Total</h5>
+                                    <h5 class="fw-bold text-primary"> ₹{{ total }} </h5>
                               </div>
-
                               <!-- Coupon -->
                               <form method="POST"
                                     action="{% url 'apply_coupon' %}">

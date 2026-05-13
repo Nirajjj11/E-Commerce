@@ -18,30 +18,14 @@
                               <i id="themeIcon" class="bi bi-moon-stars-fill fs-5"></i>
                         </button>
                         {% if user.is_authenticated %}
-                        <div class="dropdown">
-                              <a class="btn btn-outline-secondary dropdown-toggle px-3" href="#" role="button"
-                                    data-bs-toggle="dropdown">
-                                    <i class="bi bi-person-circle me-1"></i> {{ user.username }}
-                              </a>
-                              <ul class="dropdown-menu dropdown-menu-end shadow border-0">
-                                    <li><a class="dropdown-item" href="{% url 'profile' %}">Profile</a></li>
-                                    <li><a class="dropdown-item" href="{% url 'user_dashboard' %}">Dashboard</a></li>
-                                    <li>
-                                          <hr class="dropdown-divider">
-                                    </li>
-                                    <li>
-                                          <form action="{% url 'logout' %}" method="post" class="px-2">
-                                                {% csrf_token %}
-                                                <button type="submit"
-                                                      class="btn btn-danger btn-sm w-100">Logout</button>
-                                          </form>
-                                    </li>
-                              </ul>
-                        </div>
+                        <a class="navbar-brand fw-bold " href="{% url 'user_dashboard' %}"> Hi, {{ user.username }} !</a>
+                        <form action="{% url 'logout' %}" method="post" class="px-2">
+                              {% csrf_token %}
+                              <button type="submit" class="btn btn-danger btn-sm w-100">Logout</button>
+                        </form>
                         {% else %}
                         <div class="d-flex gap-2">
-                              <a href="{% url 'login' %}"
-                                    class="btn btn-outline-light btn-sm">Login</a>
+                              <a href="{% url 'login' %}" class="btn btn-outline-light btn-sm">Login</a>
                               <a href="{% url 'signup' %}" class="btn btn-warning btn-sm fw-bold">Signup</a>
                         </div>
                         {% endif %}

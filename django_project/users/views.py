@@ -5,7 +5,6 @@ from .models import WishList, Cart
 from product.models import Product
 from django.contrib import messages
 
-
 class UserDashboardView(LoginRequiredMixin, TemplateView):
       template_name = "dashboard.html"
 
