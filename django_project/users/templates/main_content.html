@@ -138,8 +138,20 @@
                   style="background:linear-gradient(135deg,#FB641B,#e55a17);">
 
                   <h3 class="fw-bold text-white">
+                        {% if request.user.is_superuser %}
+
+                        ₹{{ platform_revenue|floatformat:0 }}
+
+                        {% elif request.user.is_approved_seller %}
+
+                        ₹{{ total_sales|floatformat:0 }}
+
+                        {% else %}
 
                         ₹{{ total_spent|floatformat:0 }}
+
+                        {% endif %}
+                        
 
                   </h3>
 
