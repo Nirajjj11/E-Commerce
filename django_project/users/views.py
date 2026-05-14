@@ -1,7 +1,8 @@
 from django.views.generic import TemplateView
 from product.models import Product
 from django.contrib import messages
-from product.models import Product, Order, OrderItems
+from product.models import Product
+from orders.models import Order, OrderItems, OrderItemTracking
 from django.contrib.auth.mixins import LoginRequiredMixin
 from commerce.models import WishList, Cart
 

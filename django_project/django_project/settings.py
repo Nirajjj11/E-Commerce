@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     "accounts",         # for accounts app
     "users",            # for users app
     "commerce",         # for commerce app
+    "orders",           # for order app
 
 ]
 

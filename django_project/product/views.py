@@ -3,7 +3,7 @@ from django.views.generic import ListView, DeleteView, DetailView, CreateView, U
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy, reverse
 from django.contrib import messages
-from .models import Product, Order, OrderItems, OrderItemTracking
+from .models import Product
 from commerce.models import WishList, Cart
 
 class ProductListView(ListView):
