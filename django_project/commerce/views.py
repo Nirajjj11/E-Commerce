@@ -5,6 +5,7 @@ from django.shortcuts import redirect, get_object_or_404
 from product.models import Product
 from django.contrib import messages
 from django.views.generic import ListView, View, TemplateView
+from orders.models import Order, OrderItems, OrderItemTracking
 
 # Create your views here.
 class WishListView(LoginRequiredMixin, ListView):
@@ -103,6 +104,7 @@ class ApplyCouponView(LoginRequiredMixin, View):
             return redirect("cart")
 
 # CHECKOUT VIEWS
+
 class CheckoutView(LoginRequiredMixin, TemplateView):
       template_name = "checkout.html"
 
@@ -114,55 +116,102 @@ class CheckoutView(LoginRequiredMixin, TemplateView):
                   user=self.request.user
             ).select_related("product")
 
-            subtotal = sum(item.product.actual_price * item.quantity for item in cart_items)
+            subtotal = sum(
+                  item.product.actual_price * item.quantity
+                  for item in cart_items
+            )
 
-            # Delivery Logic
             delivery_charge = 0 if subtotal > 500 else 40
-
-            # Platform Fee
             platform_fee = 10
 
-            # Membership
             is_member = self.request.session.get("is_prime", False)
 
             if is_member:
                   delivery_charge = 0
                   platform_fee = 0
 
-            # Discount
             disc_amount = 0
 
-            # Final Total
             total = (
                   subtotal
                   + delivery_charge
                   + platform_fee
                   - disc_amount
             )
-            context["items"] = cart_items
-            context["subtotal"] = subtotal
-            context["delivery_charge"] = delivery_charge
-            context["platform_fee"] = platform_fee
-            context["disc_amount"] = disc_amount
-            context["total"] = total
-            context["is_member"] = is_member
+
+            context.update({
+                  "items": cart_items,
+                  "subtotal": subtotal,
+                  "delivery_charge": delivery_charge,
+                  "platform_fee": platform_fee,
+                  "disc_amount": disc_amount,
+                  "total": total,
+                  "is_member": is_member,
+            })
 
             return context
 
       def post(self, request, *args, **kwargs):
+
             payment_method = request.POST.get("payment_method")
+
             cart_items = Cart.objects.filter(user=request.user)
+
             if not cart_items.exists():
-                  messages.error(request,"Your cart is empty.")
+                  messages.error(request, "Your cart is empty.")
                   return redirect("cart")
 
-            # Create Order Logic Here
-            messages.success(request,f"Order placed successfully using {payment_method}")
-            
-            # Clear cart
+            subtotal = sum(
+                  item.product.actual_price * item.quantity
+                  for item in cart_items
+            )
+
+            delivery_charge = 0 if subtotal > 500 else 40
+            platform_fee = 10
+
+            is_member = request.session.get("is_prime", False)
+
+            if is_member:
+                  delivery_charge = 0
+                  platform_fee = 0
+
+            total = subtotal + delivery_charge + platform_fee
+
+            # CREATE ORDER
+            order = Order.objects.create(
+                  buyer=request.user,
+                  subtotal=subtotal,
+                  delivery_charge=delivery_charge,
+                  platform_fee=platform_fee,
+                  total_amount=total,
+                  payment_method=payment_method,
+                  is_bazar_member=is_member
+            )
+
+            # CREATE ORDER ITEMS
+            for item in cart_items:
+
+                  order_item = OrderItems.objects.create(
+                  order=order,
+                  product=item.product,
+                  quantity=item.quantity,
+                  price_at_purchase=item.product.actual_price,
+                  )
+
+                  # CREATE INITIAL TRACKING
+                  OrderItemTracking.objects.create(
+                  item=order_item,
+                  status="PENDING",
+                  notes="Order has been placed successfully."
+                  )
+
+            # CLEAR CART
             cart_items.delete()
-            return redirect("dashboard")
-      
+
+            messages.success(request, "Order placed successfully!")
+
+            return redirect("orders")
+
 class ToggleWishlistView(LoginRequiredMixin, View):
       def get(self, request, pk):
             product = get_object_or_404( Product,pk=pk)

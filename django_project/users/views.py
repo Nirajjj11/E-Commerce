@@ -6,6 +6,8 @@ from orders.models import Order, OrderItems, OrderItemTracking
 from django.contrib.auth.mixins import LoginRequiredMixin
 from commerce.models import WishList, Cart
 
+from django.db.models import Sum
+
 class DashboardView(LoginRequiredMixin, TemplateView):
       template_name = 'dashboard.html'
 
@@ -39,15 +41,20 @@ class UserDashboardView(LoginRequiredMixin, TemplateView):
                   context["total_sales"] = total_sales
                   context["total_products"] = seller_products.count()
                   context["pending_orders"] = seller_order_items.filter(status="PROCESSING").count()
-                  context["delivered_orders"] = seller_order_items.filter(status="DELEVERED").count()
+                  context["delivered_orders"] = seller_order_items.filter(status="DELIVERED").count()
 
             # -------------------------
             # NORMAL USER DASHBOARD
             # -------------------------
             else:
+                  user_orders = Order.objects.filter(buyer=user).order_by("-created_at")
+
+                  total_spent = user_orders.aggregate(total=Sum("total_amount"))["total"] or 0
+
                   context["wishlist"] = WishList.objects.filter(user=user)
                   context["cart"] = Cart.objects.filter(user=user)
-                  context["orders"] = Order.objects.filter(buyer=user).order_by("-created_at")
+                  context["orders"] = user_orders
+                  context["total_spent"] = total_spent
 
             return context
 
