@@ -60,12 +60,15 @@ class UserDashboardView(LoginRequiredMixin, TemplateView):
                         )
                   )["total"]
                   
+                  low_stock_products = seller_products.filter(stocks__lt=10)
+                  
                   context["products"] = seller_products
                   context["seller_orders"] = seller_order_items
                   context["total_sales"] = total_sales
                   context["total_products"] = seller_products.count()
                   context["pending_orders"] = seller_order_items.filter(status="PROCESSING").count()
                   context["delivered_orders"] = seller_order_items.filter(status="DELIVERED").count()
+                  context["low_stock_products"] = low_stock_products.count()
 
             # -------------------------
             # NORMAL USER DASHBOARD
