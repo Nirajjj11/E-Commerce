@@ -39,6 +39,7 @@ class UserDashboardView(LoginRequiredMixin, TemplateView):
                   context['total_sellers'] = user.__class__.objects.filter(is_approved_seller=True).count()
                   context["platform_revenue"] = platform_revenue
                   context["recent_orders"] = Order.objects.all().order_by("-created_at")[:5]
+                  context['orders'] = Order.objects.all().order_by("-created_at")[:10]
                   
             # -------------------------
             # SELLER DASHBOARD
@@ -77,18 +78,22 @@ class UserDashboardView(LoginRequiredMixin, TemplateView):
                   context["shipped_orders"] = seller_order_items.filter(status="SHIPPED").count()
                   context["cancelled_orders"] = seller_order_items.filter(status="CANCELLED").count()
                   
+                  context["orders"] = seller_order_items
+                  
             # -------------------------
             # NORMAL USER DASHBOARD
             # -------------------------
             else:
-                  user_orders = Order.objects.filter(buyer=user, order_status="DELIVERED").order_by("-created_at")
+                  user_orders = Order.objects.filter(buyer=user).order_by("-created_at")
 
-                  total_spent = user_orders.aggregate(total=Sum("total_amount"))["total"] or 0
+                  delivered_orders = user_orders.filter(order_status="DELIVERED")
 
+                  total_spent = user_orders.aggregate(total=Coalesce(Sum("total_amount"),Decimal("0.00")))["total"]
                   context["wishlist"] = WishList.objects.filter(user=user)
                   context["cart"] = Cart.objects.filter(user=user)
                   context["orders"] = user_orders
                   context["total_spent"] = total_spent
+                  context["active_orders"] = user_orders.exclude(order_status="DELIVERED")[:5]
 
             return context
 

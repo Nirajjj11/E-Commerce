@@ -151,7 +151,7 @@
                         ₹{{ total_spent|floatformat:0 }}
 
                         {% endif %}
-                        
+
 
                   </h3>
 
@@ -397,32 +397,83 @@
 
                         <tr>
 
+                              <!-- ORDER ID -->
                               <td>
+
                                     <small>
+
+                                          {% if request.user.is_approved_seller and not request.user.is_superuser %}
+
+                                          #{{ order.order.id }}
+
+                                          {% else %}
+
                                           #{{ order.id }}
+
+                                          {% endif %}
+
                                     </small>
+
                               </td>
 
+                              <!-- DATE -->
                               <td>
+
                                     <small>
+
+                                          {% if request.user.is_approved_seller and not request.user.is_superuser %}
+
+                                          {{ order.order.created_at|date:"d M Y" }}
+
+                                          {% else %}
+
                                           {{ order.created_at|date:"d M Y" }}
+
+                                          {% endif %}
+
                                     </small>
+
                               </td>
 
+                              <!-- AMOUNT -->
                               <td>
+
                                     <strong>
+
+                                          {% if request.user.is_approved_seller and not request.user.is_superuser %}
+
+                                          ₹{{ order.seller_earning }}
+
+                                          {% else %}
+
                                           ₹{{ order.total_amount }}
+
+                                          {% endif %}
+
                                     </strong>
+
                               </td>
 
+                              <!-- STATUS -->
                               <td>
 
-                                    <span class="badge bg-success">
-                                          Active
+                                    {% if request.user.is_approved_seller and not request.user.is_superuser %}
+
+                                    <span class="badge bg-info">
+                                          {{ order.status }}
                                     </span>
 
+                                    {% else %}
+
+                                    <span class="badge bg-success">
+                                          {{ order.order_status }}
+                                    </span>
+
+                                    {% endif %}
+
                               </td>
 
+                              <!-- ACTION -->
                               <td>
 
                                     <a href="#" class="btn btn-outline-primary btn-sm">
