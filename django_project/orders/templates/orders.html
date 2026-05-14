@@ -1,15 +1,23 @@
-{% extends "dashboard.html" %}
+{% extends "base.html" %}
 {% block title %}
 My Orders
 {% endblock %}
-{% block rightsidebarcontent %}
+{% block content %}
 
 <div class="container py-5">
 
+      {% if user.is_approved_seller %}
+      <h2 class="fw-bold mb-4">
+            <i class="bi bi-bag-check-fill text-success"></i>
+            Seller Order Managements
+      </h2>
+      {% else %}
       <h2 class="fw-bold mb-4">
             <i class="bi bi-bag-check-fill text-success"></i>
             My Orders
       </h2>
+      {% endif %}
+
 
       {% for order in orders %}
 
@@ -57,20 +65,37 @@ My Orders
                               <h5 class="text-success">
                                     ₹{{ item.price_at_purchase }}
                               </h5>
+                              {% if user.is_approved_seller %}
+
+                              <p class="text-danger mb-1">
+                                    Buyer : {{ item.order.buyer.username }}
+                              </p>
+
+                              {% else %}
+
                               <p class="text-danger mb-1">
                                     Seller : {{ item.product.seller.username }}
                               </p>
 
+                              {% endif %}
                         </div>
 
                         <div class="col-md-3 text-end">
+                              {% if user.is_approved_seller %}
+                              <a href="{% url 'tracking' item.id %}" class="btn btn-dark rounded-pill">
 
+                                    <i class="bi bi-truck"></i>
+                                    Manage Order
+
+                              </a>
+                              {% else %}
                               <a href="{% url 'tracking' item.id %}" class="btn btn-dark rounded-pill">
 
                                     <i class="bi bi-truck"></i>
                                     Track Order
 
                               </a>
+                              {% endif %}
 
                         </div>
 
