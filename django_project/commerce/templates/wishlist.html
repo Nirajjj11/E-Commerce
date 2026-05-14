@@ -1,109 +1,156 @@
-{% extends "base.html" %}
+{% extends "dashboard.html" %}
 
 {% block title %}
-Wishlist
+My Wishlist
 {% endblock %}
 
-{% block content %}
-<div class="container py-4">
+{% block rightsidebarcontent %}
 
-      <div class="d-flex justify-content-between align-items-center mb-4">
-            <h2 class="fw-bold mb-0">
-                  <i class="bi bi-heart-fill text-danger"></i>
-                  My Wishlist
-            </h2>
+<div class="container-fluid bg-body-secondary min-vh-100 py-4">
 
-            <span class="badge bg-dark fs-6">
-                  {{ wishlist_items|length }} Items
-            </span>
-      </div>
+      <div class="container">
 
-      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+            <div class="row g-4">
 
-            {% for item in wishlist_items %}
+                  <!-- RIGHT SIDE -->
+                  <div class="col-lg-9">
 
-            <div class="col">
+                        <div class="card border-0 shadow-sm rounded-1">
 
-                  <div class="card h-100 shadow-sm border-0">
+                              <!-- HEADER -->
+                              <div class="card-header bg-body border-bottom py-3">
 
-                        <a href="{{ item.product.get_absolute_url }}" class="text-decoration-none text-dark">
+                                    <h4 class="fw-bold mb-0">
+                                          My Wishlist
+                                          ({{ wishlist_items|length }})
+                                    </h4>
 
-                              {% if item.product.image %}
-                              <img src="{{ item.product.image.url }}" class="card-img-top product-card-img"
-                                    alt="{{ item.product.name }}">
-                              {% else %}
-                              <img src="https://placehold.co/600x400" class="card-img-top product-card-img"
-                                    alt="No Image">
-                              {% endif %}
+                              </div>
 
-                        </a>
+                              <!-- ITEMS -->
+                              {% for item in wishlist_items %}
 
-                        <div class="card-body d-flex flex-column">
+                              <div class="card-body border-bottom">
 
-                              <h5 class="card-title fw-semibold">
-                                    {{ item.product.name }}
-                              </h5>
+                                    <div class="row align-items-center g-3">
 
-                              <p class="card-text text-muted small">
-                                    {{ item.product.description|truncatewords:10 }}
-                              </p>
+                                          <!-- IMAGE -->
+                                          <div class="col-md-2 text-center">
 
-                              <div class="mt-auto">
+                                                <a href="{{ item.product.get_absolute_url }}">
 
-                                    <div class="mb-3">
+                                                      {% if item.product.image %}
 
-                                          <span class="fw-bold fs-5">
-                                                ₹{{ item.product.actual_price }}
-                                          </span>
+                                                      <img src="{{ item.product.image.url }}"
+                                                            class="img-fluid"
+                                                            style="height:140px; object-fit:contain;">
 
-                                          <span class="text-muted text-decoration-line-through ms-2">
-                                                ₹{{ item.product.marked_price }}
-                                          </span>
+                                                      {% else %}
 
-                                          <span class="badge bg-success ms-2">
-                                                {{ item.product.discounts }}% OFF
-                                          </span>
+                                                      <img src="https://placehold.co/300x300"
+                                                            class="img-fluid">
 
-                                    </div>
+                                                      {% endif %}
 
-                                    <div class="d-grid gap-2">
+                                                </a>
 
-                                          <a href="{{ item.product.get_absolute_url }}" class="btn btn-primary">
-                                                View Product
-                                          </a>
+                                          </div>
 
-                                          <a href="{% url 'remove_from_wishlist' item.pk %}"
-                                                class="btn btn-outline-danger">
-                                                Remove
-                                          </a>
+                                          <!-- INFO -->
+                                          <div class="col-md-8">
+
+                                                <a href="{{ item.product.get_absolute_url }}"
+                                                      class="text-decoration-none text-body">
+
+                                                      <h5 class="fw-semibold mb-2">
+                                                            {{ item.product.name }}
+                                                      </h5>
+
+                                                </a>
+
+                                                <p class="text-body-secondary small mb-2">
+                                                      {{ item.product.description|truncatewords:18 }}
+                                                </p>
+
+                                                <div class="d-flex align-items-center flex-wrap">
+
+                                                      <h3 class="fw-bold mb-0 me-2">
+                                                            ₹{{ item.product.actual_price }}
+                                                      </h3>
+
+                                                      <span class="text-decoration-line-through text-body-secondary me-2">
+                                                            ₹{{ item.product.marked_price }}
+                                                      </span>
+
+                                                      <span class="text-success fw-semibold">
+                                                            {{ item.product.discounts }}% off
+                                                      </span>
+
+                                                </div>
+
+                                                <div class="mt-3">
+
+                                                      <span class="badge text-bg-success">
+                                                            Assured
+                                                      </span>
+
+                                                </div>
+
+                                          </div>
+
+                                          <!-- REMOVE -->
+                                          <div class="col-md-2 text-end">
+
+                                                <form method="post"
+                                                      action="{% url 'remove_from_wishlist' item.pk %}">
+
+                                                      {% csrf_token %}
+
+                                                      <button type="submit"
+                                                            class="btn btn-light border rounded-circle">
+
+                                                            <i class="bi bi-trash3"></i>
+
+                                                      </button>
+
+                                                </form>
+
+                                          </div>
 
                                     </div>
 
                               </div>
+
+                              {% empty %}
+
+                              <div class="card-body text-center py-5">
+
+                                    <i class="bi bi-heart display-1 text-danger"></i>
+
+                                    <h3 class="fw-bold mt-3">
+                                          Your Wishlist is Empty
+                                    </h3>
+
+                                    <p class="text-body-secondary">
+                                          Save your favourite products here.
+                                    </p>
+
+                                    <a href="{% url 'home' %}"
+                                          class="btn btn-primary px-4">
+
+                                          Continue Shopping
+
+                                    </a>
+
+                              </div>
+
+                              {% endfor %}
 
                         </div>
 
                   </div>
 
             </div>
-
-            {% empty %}
-
-            <div class="col-12 text-center py-5">
-
-                  <i class="bi bi-heart text-danger display-1"></i>
-
-                  <h4 class="mt-3 text-muted">
-                        Your wishlist is empty
-                  </h4>
-
-                  <a href="{% url 'home' %}" class="btn btn-primary mt-3">
-                        Explore Products
-                  </a>
-
-            </div>
-
-            {% endfor %}
 
       </div>
 
