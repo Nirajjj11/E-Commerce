@@ -1,7 +1,9 @@
 {% extends "base.html" %}
+
 {% block title %}
 My Orders
 {% endblock %}
+
 {% block content %}
 
 <div class="container py-5">
@@ -9,7 +11,7 @@ My Orders
       {% if user.is_approved_seller %}
       <h2 class="fw-bold mb-4">
             <i class="bi bi-bag-check-fill text-success"></i>
-            Seller Order Managements
+            Seller Order Management
       </h2>
       {% else %}
       <h2 class="fw-bold mb-4">
@@ -18,7 +20,6 @@ My Orders
       </h2>
       {% endif %}
 
-
       {% for order in orders %}
 
       <div class="card shadow border-0 mb-4 rounded-4">
@@ -26,7 +27,8 @@ My Orders
             <div class="card-header bg-dark text-white d-flex justify-content-between">
 
                   <div>
-                        <strong>Order ID:</strong> #{{ order.id }}
+                        <strong>Order ID:</strong>
+                        #{{ order.id }}
                   </div>
 
                   <div>
@@ -41,14 +43,23 @@ My Orders
 
                   <div class="row align-items-center border-bottom py-3">
 
+                        <!-- PRODUCT IMAGE -->
                         <div class="col-md-2">
-                              <img src="{{ item.product.image.url }}" class="img-fluid rounded"
-                                    style="height:100px;object-fit:cover;">
+
+                              <img
+                                    src="{{ item.product.image.url }}"
+                                    class="img-fluid rounded"
+                                    style="height:100px; object-fit:cover;"
+                              >
+
                         </div>
 
+                        <!-- PRODUCT INFO -->
                         <div class="col-md-4">
 
-                              <h5>{{ item.product.name }}</h5>
+                              <h5>
+                                    {{ item.product.name }}
+                              </h5>
 
                               <p class="text-muted mb-1">
                                     Quantity: {{ item.quantity }}
@@ -60,41 +71,82 @@ My Orders
 
                         </div>
 
+                        <!-- PRICE + USER INFO -->
                         <div class="col-md-3">
 
                               <h5 class="text-success">
                                     ₹{{ item.price_at_purchase }}
                               </h5>
+
                               {% if user.is_approved_seller %}
 
                               <p class="text-danger mb-1">
-                                    Buyer : {{ item.order.buyer.username }}
+                                    Buyer :
+                                    {{ item.order.buyer.username }}
                               </p>
 
                               {% else %}
 
                               <p class="text-danger mb-1">
-                                    Seller : {{ item.product.seller.username }}
+                                    Seller :
+                                    {{ item.product.seller.username }}
                               </p>
 
                               {% endif %}
+
                         </div>
 
+                        <!-- ACTION BUTTONS -->
                         <div class="col-md-3 text-end">
+
                               {% if user.is_approved_seller %}
-                              <a href="{% url 'tracking' item.id %}" class="btn btn-dark rounded-pill">
+
+                              <!-- MANAGE ORDER -->
+                              <a
+                                    href="{% url 'tracking' item.id %}"
+                                    class="btn btn-dark rounded-pill mb-2"
+                              >
 
                                     <i class="bi bi-truck"></i>
                                     Manage Order
 
                               </a>
+
+                              <br>
+
+                              <!-- DELETE / HIDE ORDER -->
+                              <form
+                                    method="POST"
+                                    action="{% url 'seller_order_delete' item.id %}"
+                              >
+
+                                    {% csrf_token %}
+
+                                    <button
+                                          type="submit"
+                                          class="btn btn-danger btn-sm rounded-pill"
+                                    >
+
+                                          <i class="bi bi-trash"></i>
+                                          Remove
+
+                                    </button>
+
+                              </form>
+
                               {% else %}
-                              <a href="{% url 'tracking' item.id %}" class="btn btn-dark rounded-pill">
+
+                              <!-- TRACK ORDER -->
+                              <a
+                                    href="{% url 'tracking' item.id %}"
+                                    class="btn btn-dark rounded-pill"
+                              >
 
                                     <i class="bi bi-truck"></i>
                                     Track Order
 
                               </a>
+
                               {% endif %}
 
                         </div>

@@ -13,8 +13,7 @@
 
                         <div class="col-md-2 text-center">
 
-                              <img src="{{ item.product.image.url }}"
-                                    class="img-fluid rounded-3"
+                              <img src="{{ item.product.image.url }}" class="img-fluid rounded-3"
                                     style="height:120px;width:120px;object-fit:cover;">
 
                         </div>
@@ -119,28 +118,15 @@
 
                                           <div class="col-md-8">
 
-                                                <select name="status"
-                                                      class="form-select form-select-lg rounded-pill">
+                                                <select name="status" class="form-select form-select-lg rounded-pill">
 
-                                                      <option value="Order Confirmed">
-                                                            Order Confirmed
+                                                      {% for value, label in next_statuses %}
+
+                                                      <option value="{{ value }}">
+                                                            {{ label }}
                                                       </option>
 
-                                                      <option value="Packed">
-                                                            Packed
-                                                      </option>
-
-                                                      <option value="Shipped">
-                                                            Shipped
-                                                      </option>
-
-                                                      <option value="Out For Delivery">
-                                                            Out For Delivery
-                                                      </option>
-
-                                                      <option value="Delivered">
-                                                            Delivered
-                                                      </option>
+                                                      {% endfor %}
 
                                                 </select>
 
@@ -148,8 +134,7 @@
 
                                           <div class="col-md-4">
 
-                                                <button type="submit"
-                                                      class="btn btn-success btn-lg rounded-pill w-100">
+                                                <button type="submit" class="btn btn-success btn-lg rounded-pill w-100">
 
                                                       Update
 
@@ -161,9 +146,7 @@
 
                                     <div class="mt-3">
 
-                                          <textarea name="notes"
-                                                rows="3"
-                                                class="form-control rounded-4"
+                                          <textarea name="notes" rows="3" class="form-control rounded-4"
                                                 placeholder="Optional notes"></textarea>
 
                                     </div>
@@ -222,9 +205,7 @@
                                     </div>
 
                                     <!-- REVIEW -->
-                                    <textarea name="review"
-                                          rows="4"
-                                          class="form-control rounded-4 mb-3"
+                                    <textarea name="review" rows="4" class="form-control rounded-4 mb-3"
                                           placeholder="Write your review"></textarea>
 
                                     <button class="btn btn-primary rounded-pill px-5">

@@ -37,7 +37,8 @@ class Order(models.Model):
             return f"Order {self.order_id}"
 
 # ORDER ITEMS (the junction table with logistic Status)
-class OrderItems(models.Model): 
+class OrderItems(models.Model):
+
       STATUS_CHOICES = [
             ("PENDING", "Pending"),
             ("ORDER_ACCEPTED","Order Accepted"),
@@ -47,30 +48,77 @@ class OrderItems(models.Model):
             ("DELIVERED", "Delivered"),
             ("CANCELLED","Cancelled"),
             ("RETURNED","Returned"),
-      ]           
+      ]
+
+      STATUS_FLOW = {
+            "PENDING": ["ORDER_ACCEPTED", "CANCELLED"],
+            "ORDER_ACCEPTED": ["PROCESSING"],
+            "PROCESSING": ["SHIPPED"],
+            "SHIPPED": ["IN_TRANSIT"],
+            "IN_TRANSIT": ["DELIVERED"],
+            "DELIVERED": [],
+            "CANCELLED": [],
+            "RETURNED": [],
+      }
+
       order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name="items")
       product = models.ForeignKey(Product, on_delete=models.CASCADE)
-      quantity = models.PositiveIntegerField(default=1)
-      price_at_purchase = models.DecimalField(max_digits=10, decimal_places=2)
-      
-      # Logistics Status
-      status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="PENDING")
-      tracking_id = models.CharField(max_length=100, blank=True, null=True)
-      last_update = models.DateTimeField(auto_now=True)
-      
-      platform_fee_percentage = models.DecimalField(max_digits=5,decimal_places=2,default=10.00)
-      platform_earning = models.DecimalField( max_digits=10, decimal_places=2, default=0.00)
-      seller_earning = models.DecimalField(max_digits=10,decimal_places=2,default=0.00)
-      
-      def save(self, *args, **kwargs):
-            total_price = self.price_at_purchase * self.quantity
-            self.platform_earning = (total_price * self.platform_fee_percentage) / 100
-            self.seller_earning = total_price - self.platform_earning
-            super().save(*args, **kwargs)
-            
-      def __str__(self):
-            return f"{self.product.name} ({self.quantity} - {self.status})"
 
+      quantity = models.PositiveIntegerField(default=1)
+
+      price_at_purchase = models.DecimalField(
+            max_digits=10,
+            decimal_places=2
+      )
+
+      status = models.CharField(
+            max_length=20,
+            choices=STATUS_CHOICES,
+            default="PENDING"
+      )
+
+      tracking_id = models.CharField(max_length=100, blank=True, null=True)
+
+      last_update = models.DateTimeField(auto_now=True)
+
+      is_visible_to_seller = models.BooleanField(default=True)
+
+      platform_fee_percentage = models.DecimalField(
+            max_digits=5,
+            decimal_places=2,
+            default=10.00
+      )
+
+      platform_earning = models.DecimalField(
+            max_digits=10,
+            decimal_places=2,
+            default=0.00
+      )
+
+      seller_earning = models.DecimalField(
+            max_digits=10,
+            decimal_places=2,
+            default=0.00
+      )
+
+      def get_next_statuses(self):
+            return self.STATUS_FLOW.get(self.status, [])
+
+      def save(self, *args, **kwargs):
+
+            total_price = self.price_at_purchase * self.quantity
+
+            self.platform_earning = (
+                  total_price * self.platform_fee_percentage
+            ) / 100
+
+            self.seller_earning = total_price - self.platform_earning
+
+            super().save(*args, **kwargs)
+
+      def __str__(self):
+            return f"{self.product.name} ({self.quantity})"
+      
 # TRACKING LOGS (Timeline for Logistics)
 class OrderItemTracking(models.Model):
       item = models.ForeignKey(OrderItems, on_delete=models.CASCADE, related_name='logs')
@@ -79,7 +127,7 @@ class OrderItemTracking(models.Model):
       notes = models.CharField(max_length=100, blank=True, null=True)
 
       class Meta:
-            ordering = ['-timestamp']
+            ordering = ['timestamp']
       
       def __str__(self):
             return f"{self.item.product.name} moved to {self.status} at {self.timestamp}"

@@ -23,7 +23,8 @@ class OrderListView(LoginRequiredMixin, ListView):
             if self.request.user.is_approved_seller:
 
                   return Order.objects.filter(
-                        items__product__seller=self.request.user
+                        items__product__seller=self.request.user,
+                        items__is_visible_to_seller=True
                   ).distinct().prefetch_related(
                         "items",
                         "items__product",
@@ -41,9 +42,20 @@ class OrderListView(LoginRequiredMixin, ListView):
 
 
 class TrackOrderView(LoginRequiredMixin, DetailView):
+
       model = OrderItems
       template_name = "tracking.html"
       context_object_name = "item"
+
+      def get_context_data(self, **kwargs):
+
+            context = super().get_context_data(**kwargs)
+
+            context["next_statuses"] = (
+                  self.object.get_next_statuses()
+            )
+
+            return context
 
       def post(self, request, *args, **kwargs):
 
@@ -55,16 +67,34 @@ class TrackOrderView(LoginRequiredMixin, DetailView):
                   status = request.POST.get("status")
                   notes = request.POST.get("notes")
 
+                  # INVALID STATUS BLOCK
+                  if not self.object.can_update_status(status):
+
+                        messages.error(
+                              request,
+                              "Invalid status update"
+                        )
+
+                        return redirect(
+                              "tracking",
+                              pk=self.object.id
+                        )
+
+                  # CREATE TRACKING LOG
                   OrderItemTracking.objects.create(
                         item=self.object,
                         status=status,
                         notes=notes
                   )
 
+                  # UPDATE STATUS
                   self.object.status = status
                   self.object.save()
 
-                  messages.success(request, "Order status updated")
+                  messages.success(
+                        request,
+                        "Order status updated"
+                  )
 
             # USER REVIEW
             else:
@@ -74,6 +104,37 @@ class TrackOrderView(LoginRequiredMixin, DetailView):
 
                   print(rating, review)
 
-                  messages.success(request, "Review submitted")
+                  messages.success(
+                        request,
+                        "Review submitted"
+                  )
 
-            return redirect("tracking", pk=self.object.id)
+            return redirect(
+                  "tracking",
+                  pk=self.object.id
+            )
+      
+from django.views import View
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import get_object_or_404, redirect
+from django.contrib import messages
+
+from .models import OrderItems
+
+
+class SellerOrderDeleteView(LoginRequiredMixin, View):
+
+      def post(self, request, pk):
+
+            item = get_object_or_404(
+                  OrderItems,
+                  pk=pk,
+                  product__seller=request.user
+            )
+
+            item.is_visible_to_seller = False
+            item.save()
+
+            messages.success(request, "Order removed successfully")
+
+            return redirect("orders")
