@@ -6,20 +6,14 @@ My Wishlist
 
 {% block rightsidebarcontent %}
 
-<div class="container-fluid bg-body-secondary min-vh-100 py-4">
-
+<div class="container-fluid bg-body-secondary py-4">
       <div class="container">
-
             <div class="row g-4">
-
                   <!-- RIGHT SIDE -->
-                  <div class="col-lg-9">
-
+                  <div class="col">
                         <div class="card border-0 shadow-sm rounded-1">
-
                               <!-- HEADER -->
                               <div class="card-header bg-body border-bottom py-3">
-
                                     <h4 class="fw-bold mb-0">
                                           My Wishlist
                                           ({{ wishlist_items|length }})
@@ -88,14 +82,6 @@ My Wishlist
 
                                                 </div>
 
-                                                <div class="mt-3">
-
-                                                      <span class="badge text-bg-success">
-                                                            Assured
-                                                      </span>
-
-                                                </div>
-
                                           </div>
 
                                           <!-- REMOVE -->
@@ -107,7 +93,7 @@ My Wishlist
                                                       {% csrf_token %}
 
                                                       <button type="submit"
-                                                            class="btn btn-light border rounded-circle">
+                                                            class="btn btn-danger border rounded-circle">
 
                                                             <i class="bi bi-trash3"></i>
 
