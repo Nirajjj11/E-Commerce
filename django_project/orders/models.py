@@ -58,6 +58,16 @@ class OrderItems(models.Model):
       tracking_id = models.CharField(max_length=100, blank=True, null=True)
       last_update = models.DateTimeField(auto_now=True)
       
+      platform_fee_percentage = models.DecimalField(max_digits=5,decimal_places=2,default=10.00)
+      platform_earning = models.DecimalField( max_digits=10, decimal_places=2, default=0.00)
+      seller_earning = models.DecimalField(max_digits=10,decimal_places=2,default=0.00)
+      
+      def save(self, *args, **kwargs):
+            total_price = self.price_at_purchase * self.quantity
+            self.platform_earning = (total_price * self.platform_fee_percentage) / 100
+            self.seller_earning = total_price - self.platform_earning
+            super().save(*args, **kwargs)
+            
       def __str__(self):
             return f"{self.product.name} ({self.quantity} - {self.status})"
 
