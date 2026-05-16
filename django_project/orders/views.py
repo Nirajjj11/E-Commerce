@@ -6,11 +6,9 @@ from .models import Order, OrderItems
 from .forms import OrderStatusUpdateForm
 from .models import OrderItemTracking
 
-from django.shortcuts import redirect
 from django.contrib import messages
-from django.views.generic import DetailView
-from .models import OrderItems
 
+from django.views import View
 
 class OrderListView(LoginRequiredMixin, ListView):
       model = Order
@@ -113,14 +111,6 @@ class TrackOrderView(LoginRequiredMixin, DetailView):
                   "tracking",
                   pk=self.object.id
             )
-      
-from django.views import View
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import get_object_or_404, redirect
-from django.contrib import messages
-
-from .models import OrderItems
-
 
 class SellerOrderDeleteView(LoginRequiredMixin, View):
 
