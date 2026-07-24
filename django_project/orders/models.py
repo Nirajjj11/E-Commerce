@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 from django.conf import settings
 from product.models import *
+from decimal import Decimal
 # Create your models here.
 
 # not done
@@ -102,8 +103,17 @@ class OrderItems(models.Model):
       )
 
       def get_next_statuses(self):
-            return self.STATUS_FLOW.get(self.status, [])
+            allowed_statuses = self.STATUS_FLOW.get(self.status, [])
 
+            return [
+                  (value, label)
+                  for value, label in self.STATUS_CHOICES
+                  if value in allowed_statuses
+            ]
+      
+      def can_update_status(self, new_status):
+            return new_status in self.STATUS_FLOW.get(self.status, [])
+      
       def save(self, *args, **kwargs):
 
             total_price = self.price_at_purchase * self.quantity
